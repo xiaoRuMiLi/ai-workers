@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        less 
+    </title>
+</head>
+<body>
+    <h2>
+        项目中引入
+    </h2>
+    <p>
+        <a href="https://www.cnblogs.com/zzz-knight/p/11598843.html"> 项目中使用 </a>
+    </p>
+    <h2>
+        less 和 less-loader
+    </h2>
+    <p>
+        <a href="https://www.cnblogs.com/goloving/p/14793201.html">less-loader详解</a>
+    </p>
+    <h3>
+        全局配置less文件
+    </h3>
+
+    <p>
+        在 vite.config.js 文件中配置css 项，其中文件路径指向全局less文件即可全局使用变量
+        <pre>
+            import { defineConfig } from 'vite';
+            import vue from '@vitejs/plugin-vue';
+            export default defineConfig({
+                plugins: [
+                    vue(),
+                ],
+                // less 配置
+                css: {
+                    preprocessorOptions: {
+                        less: {
+                            // less文件路径
+                            additionalData: `@import "src/assets/css/theme.less";`,
+                        }
+                    }
+                },
+            })
+        </pre>
+        <a href="https://www.jianshu.com/p/b0361fb8962f">全局less文件</a>
+    </p>
+    
+</body>
+</html>

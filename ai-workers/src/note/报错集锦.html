@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+    <head>
+		<title>
+			Vue3报错集锦及解决连接
+		</title>
+	</head>
+	<body>
+		<h3> 运行报错 Failed to resolve import </h3>
+		<p> Failed to resolve import "D:/桌面/项目文件/weixiubang-manager/weixiubang-manager/node_modules/vant/lib/vant/es/toast/style" from "src\main.js". Does the file exist?
+		</p>
+		<span> 报错原因 </span>
+		<p>
+			根据报错信息，发现是vant的样式引入路径不对。
+			程序解析为：项目路径/node_modules/vant/lib/vant/es/组件/style
+			实际应该是：项目路径/node_modules/ vant/es/组件/style
+			多了一个vant/lib路径。
+        </p>
+		<a href = "https://blog.csdn.net/weixin_42099193/article/details/123376127">在vue3+vite项目下按需引入vant报错Failed to resolve import解决方案</a>	
+
+		<div>
+			<h3>
+             Vue parentComponent.ctx.deactivate is not a function
+			</h3>
+			<p>
+				VUE3使用keep-alive页面切换时报错：parentComponent.ctx.deactivate is not a function<br>
+				解决办法是在component 组价中绑定一个key属性:key="$route.name"
+				<br>	
+			</p>
+			<a href="https://blog.csdn.net/qq_15197419/article/details/123005480">
+
+		</div>
+	</body>
+</html>
+
+

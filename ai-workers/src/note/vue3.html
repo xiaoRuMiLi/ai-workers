@@ -1,0 +1,56 @@
+<!--
+ * @Description: 
+ * @User: King <303219462@qq.com>
+ * @Date: 2022-06-07 20:17:48
+-->
+<!DOCTYPE html>
+    <head>
+    <title>
+        vue3编程笔记
+    </title>
+    </head>
+    <body>
+        <h2>
+            目录及结构
+        </h2>
+        <h3>
+            Vue3.0静态文件
+        </h3>
+        <p> 发现说得似乎不正确 避开public直接使用static引用不了</p>
+        <a href="https://blog.csdn.net/tianxiu11/article/details/120929446" target="_blank"> Vue3.0静态文件存放路径与引用 </a>
+        <a href="https://blog.csdn.net/yangyangdt/article/details/122253653"> 静态资源的引入 </a>
+        <h3>
+            vit 加VUE3热更新不起作用
+        </h3>
+        <p>
+            代码更新保存后页面不自动加载，刷新也不起作用。 主要的原因./router/index.js问件中import 组件路径大小写写错。
+        </p>
+        <a href="https://www.jb51.net/article/240873.htm"> vit 加VUE 热更新不起 作用 </a>
+        <h2> 语法 </h2>
+        <h3> setup 语法糖 </h3>
+        <a href="https://www.cnblogs.com/MrSlow/p/15777696.html"> Vue3新的script setup语法糖 </a>
+        <h3> vue3 中require 的代替</h3>
+        <p>
+            vue3 require('path')报错 需要变成import.meta.globEager("../../assets/authentication/*.png") 或 <br>
+            import.meta.globEager 同步引入， import.meta.glob 异步引入，path中不能含有变量，使用模板语法也会引入失败<br>
+            const languageSet = import.meta.globEager( `@/language/zh-CN.json`);<br>
+            在页面引入文件例如src 或href 使用下面的方法，<br>
+            const languageS = new URL(`./language/${languageOpt}.json`, import.meta.url).href;
+
+        </p>
+
+        <h2> 语法相关 </h2>
+        <h3> v-model 自定义修饰符</h3>
+        <a href="https://www.jianshu.com/p/f9df5195fd7c"> v-model 自定义修饰符 </a>
+        <a href="https://zhuanlan.zhihu.com/p/420246129"> 自定义修饰符，setup 中获取emit </a>
+        <h2>
+            vit
+        </h2>
+        <a href="https://www.bookstack.cn/read/vitejs-2.5.0-zh/config-index.md"> vit 配置指南 </a>
+
+        <h2> 打包上线 </h2>
+        <pre>
+            1. 运行命令 nom run build 生成dist 文件，生成后压缩上传到云端  在项目目录解压即可。
+        </pre>
+    </body>
+</html>

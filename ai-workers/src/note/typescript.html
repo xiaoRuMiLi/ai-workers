@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<head>
+	<title>
+	    typescript
+	</title>
+</head>
+<body>
+	<h2>typescript 环境搭建</h2>
+
+	    <h3>安装typescript</h3>
+            <pre>
+		        npm install -g typescript
+		        // 引入path报错解决方法
+		        npm i --save-dev @types/node
+		    </pre>
+	    <h3> 新建vit 加 ts 项目命令</h3>
+	    <p>
+		    <pre>
+
+			    执行 npm init @vitejs/app 或 npm init vite@latest
+				create-vite@latest
+				Ok to proceed? (y) y
+				√ Project name: ... tspro
+				√ Select a framework: » Vue
+				√ Select a variant: » TypeScript
+				Scaffolding project in C:\Users\Administrator\Desktop\项目文件\vue3ts\tspro...
+				Done. Now run:
+
+				执行 cd tspro
+				执行 npm install
+			</pre>
+		</p>
+    <h2> Vue 文件代码检查</h2>
+    <p>
+    	对Vue文件中script标签含有lang=ts 属性的代码进行检查；
+    	<pre>
+    		项目目录下安装文件 npm  install -g vue-tsc
+    		默认是每个Vue文件中script标签都要设置lang=ts属性，如果想要允许不设置该属性请在tscofig.json文件中设置complilerOptions 里 "allowJs": true,
+    		执行命令
+    		vue-tsc --noEmit
+
+    	</pre>
+    </p>
+	<h2>IDE</h2>
+		<p>
+		    TypeScript 只会在编译时对类型进行静态检查，如果发现有错误，编译的时候就会报错。而在运行时，与普通的 JavaScript 文件一样，不会对类型进行检查。 类型错误在系统中也会运行成功并不会产生错误， 使用vscode作为开发工具可以检查代码是否有错！
+		</p>
+		<h3> 无法加载某个模块，但是能正常运行，模块是正常存在的，比如某个自定义的VUE组件</h3>
+		<p> 在系统目录新建一个目录名称自定义， 里面新建一个d.ts结尾的文件,定义一个全局变量。 文件中代码如下</p>
+		<pre>
+			declare module "*.vue" {
+				import { DefineComponent } from "vue"
+				const component: DefineComponent<{}, {}, any>
+				export default component
+			}
+		</pre>
+		<p> 在tsconfig 文件中include选项加入该文件夹名称，抄录自https://www.jb51.net/article/262435.htm</p>
+
+		<a href="https://www.cnblogs.com/riokai/p/4452088.html"> sublime 编译typescript </a>
+		<a href="http://www.icodebang.cn/article/260256">TypeScript（一）TypeScript 的特性（静态类型、弱类型）、编译时报错、安装</a>
+		<a href="http://events.jianshu.io/p/3c27c36b6cb9"> vue3+vite+ts 搭建项目 </a>
+		<a href="https://www.lmlphp.com/user/63313/article/item/2509808/"> vue 项目添加ts </a>
+		<a href="https://www.jianshu.com/p/f7b095deb2ac?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes"> 在你的Vue项目中集成Typescrip </a>
+		<a href="https://www.bbsmax.com/A/qVde04615P/">从安装到vue组件编写进行了说明，适合入门</a>
+    <h2> 关键字 <h2>   
+	    <h3> typeof </h3>
+		<p> 相当于将具体的实例转换成type 从具体实例推导出类型<br>
+			<a href="https://blog.csdn.net/zxl1990_ok/article/details/125474154"> typeof </a>
+		</p>
+		<h3> readonly </h3>
+		    <p>
+		    	<pre>
+					readonly修饰符，首先是一个关键字
+					对类中的属性成员进行修饰
+					修饰之后，该属性成员就不能修改了。
+					只能够进行访问
+					在构造函数中是可以对只读属性(readonly)进行修改的
+					2.什么时候使用readonly
+					在很多时候，我们对用户登录后；
+					会对用户的信息进行存储
+					这个时候我们是允许在对值进行修改
+					就是说：一旦确认后就不能够再次进行修改就可以使用readonly
+					需求:一旦实例化后，
+					就不能够对实例化的对象【name】属性进行修改值。
+					看下面的代
+					3.readonly的基本使用
+					class Person {
+					    readonly name:  string
+					    constructor(name: string) {
+					        this.name=name
+					    }
+					    say() {
+					        console.log(`我的名字叫${this.name}`)
+					    }
+					}
+	            <pre>
+	        <p>    	
+</body>
+</html>

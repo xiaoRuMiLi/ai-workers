@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        git 使用
+    </title>
+</head>
+<body>
+    <h2> 连接远程仓库 </h2>
+    <pre>
+        1. 初始化仓库库
+        git init
+        2. 全局配置  
+        git config --global user.name "xiaoRuMiLi"
+        git config --global user.email "303219462@qq.com"
+        3. 创建ssh key 
+        ssh-keygen -t rsa -C "303219462@qq.com"
+        途中会让你输入密码啥的，不需要管，一路回车即可，会生成你的ssh key.
+        生成ssh key 成功后会在存放在一个文件夹，界面会有显示
+        找到问文件夹中.ssh (通常在C:\Users\Administrator\.ssh）id.rsa.pub文件笔记本打开拷贝所有内容
+        登陆github https://github.com/settings/keys 添加， 点new SSH key 添加刚刚复制的内容
+        4. 连接远程仓库
+        git remote add origin git@github.com:xiaoRuMiLi/weixiubang-manager.git
+        用户名和仓库名根据实际换
+        5. 推送代码
+        git push origin master -u
+        上面命令将本地的master分支推送到origin主机，同时指定origin为默认主机，后面就可以不加任何参数使用git push了。
+        不带任何参数的git push，默认只推送当前分支，这叫做simple方式。
+        此外，还有一种matching方式，会推送所有有对应的远程分支的本地分支。
+        Git 2.0版本之前，默认采用matching方法，现在改为默认采用simple方式。
+    </pre>
+    <h2> 配置 </h2>
+    <p><a href="http://www.hangdaowangluo.com/archives/489"> Git常用的config配置 </a></p>
+    <h2> 报错 </h2>
+    <h3> Permission denied (publickey) </h3>
+    <p><a href="https://blog.csdn.net/qq_40047019/article/details/122898308"> Permission denied (publickey)  </a></p>
+
+    <h3>打算提交修改的时候(git commit -m **)报错 cannot lock ref 'refs/remotes/origin/master': unable to resolve reference 'refs/remotes/origin/master': reference broken </h3>
+    <p> 原因分析.git 中某些文件损坏 问题： push的时候，电脑强制关机再启动，vscode中所有文件都变成了绿色，暂存待提交状态
+        当我再次提交时，就出现错误：git fatal: cannot lock ref 'HEAD':unable to resolve reference'refs/heads/main':reference broken
+        **原因分析：**自动重启了然后导致 .git中的文件损坏
+         
+    </p>
+    <pre>
+        解决方法:
+        1. 新建一个文件夹, 初始化仓库 git init 
+        2. 连接远程库,git remote add origin *********, 这个和要修复的本地仓库连接相同的库
+        3. 从远程拉取代码下来 git pull origin master
+        4. 复制整个.git文件夹, 然后删除需要修复的本地仓库.git 文件夹. 把复制的.git 文件夹粘贴上去
+        5. 然后git add . , git commt-m **, git push origin master
+    </pre>
+    <h3> 常用命令 </h3>
+    <pre>
+        git log 查看系统版本信息
+            commit bd5e9c4ab51744627d90d1d2bb4279c72bc81c08 版本编号
+            Author: xiaoRuMiLi <2072836794@qq.com> 作者
+            Date:   Sat Oct 7 22:33:53 2023 +0800 提交时间
+        git reflog 查看历史操作命令
+
+        git status 查看当前工作薄状态
+
+        git reset --hard HEAD(版本号) 调到某个版本, HEAD为版本库最新版本, HEAD^ 上一个版本, HEAD^^ 上上个, HEAD~100 上100个. 输入版本号前几位就调到指定版本例如 git reset --hard bd5e9c
+            
+        
+            
+    </pre>
+
+</body>
+</html>

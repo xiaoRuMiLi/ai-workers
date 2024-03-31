@@ -1,0 +1,205 @@
+命名整体规范
+    命名嵌套问题
+        书写css要注意先后顺序和嵌套问题，从性能上考虑尽量减少选择器的层级
+        .nav ul.list{} /* 不推荐 */
+        .nav .list{} /* 推荐 */
+
+    命名中尽量避免使用中文拼音，应该采用更简明有语义的英文单词进行组合
+       命名注意缩写，但是不能盲目缩写；
+        不允许通过1、2、3等序号进行命名；
+        id注意用于标识模块或页面的某一个父容器区域，名称必须唯一，不要随意新建id；
+        class用于标识某一个类型的对象，命名必须言简意赅；
+        尽可能提高代码模块的复用，样式尽量用组合的方式；
+        规则名称中不应该包含颜色、定位等与具体显示效果相关的信息，应该用意义命名，而不是结果名称。
+
+1.  id和class的命名原则 id、class具体命名规范:驼峰命名法
+应反映该元素的功能或使用通用名称，而不要用抽象的晦涩的命名（原则：见名知其义）
+        例：system-user-info：函数名中的每一个逻辑断点都有一个下划线来标记。
+    注：文件名不要以中文或人名命名，可以在文件内部注释说明是谁修改或建立的这个文件
+
+    id：采用“小驼峰命名法”
+        例：myStudentCount：变量myStudentCount第一个单词是全部小写，后面的单词首字母大写。
+
+    class：采用“中划线法命名法”
+        例：print-employee-paychecks：函数名中的每一个逻辑断点都有一个下划线来标记。
+
+    id和class命名越精简越好，只要足够表达意思，这样有助于理解，同时也能提高代码效率
+        .navigation{} /* 不推荐 */
+        .login_box_inside_con{} /* 不推荐 */
+        .nav{} /* 推荐 */
+    避免class与id重名
+
+2. 文件夹、文件名、文件夹采用“中划线法命名法”，单不包括components 文件夹下的文件，
+        例：system-user-info：函数名中的每一个逻辑断点都有一个下划线来标记。
+        注：文件名不要以中文或人名命名，可以在文件内部注释说明是谁修改或建立的这个文件
+
+    文件名采用“中划线法命名法”
+        例：system-user-info.js：函数名中的每一个逻辑断点都有一个下划线来标记。
+3. 组件建立规则 components
+    组件一定是建立在这个文件夹下
+    系统组件会建立在src下的components，页面组件在目录下建立components文件夹，在components下建立自己的写好的组件
+    单文件组件文件名称
+    单文件组件的文件名应该要么始终是单词大写开头 (PascalCase)，要么始终是横线连接 (kebab-case)。
+
+    // bad
+    mycomponent.vue
+    myComponent.vue
+
+    // good
+    my-component.vue
+    MyComponent.vue
+
+    组件名称定义3种规则
+    --components
+    ----login-form
+    ------index.js
+    ------login-form.vue
+    或者
+
+    --components
+    ----login-form
+    ------index.vue
+    或者
+    --components
+    ----MyComponent.vue
+    ----my-component.vue
+
+    一般系统组件采用前者，页面小组件采用后者，vue默认可以识别index
+
+    紧密耦合的组件名
+    和父组件紧密耦合的子组件应该以父组件名作为前缀命名。
+        // bad
+        components/
+        |- TodoList.vue
+        |- TodoItem.vue
+        └─ TodoButton.vue
+
+        // good
+        components/
+        |- TodoList.vue
+        |- TodoListItem.vue
+        └─ TodoListItemButton.vue
+    在本文档中component 文件和views中的.vue 文件及文件夹使用大驼峰命名法除了index.vue 使用小驼峰，
+    代表组件的文件夹名即是组件名，都使用大驼峰。而且文件夹下必有index.vue 文件。
+4. 页面建立规则views
+   同components
+
+5. 自闭合组件
+    在单文件组件中没有内容的组件应该是自闭合的。
+
+        <!-- bad -->
+        <my-component></my-component>
+
+        <!-- good -->
+        <my-component />
+
+6. Prop 名大小写
+    在声明 prop 的时候使用小驼峰，而在模板中应该始终使用 kebab-case。
+
+    // bad
+    export default {
+      props: {
+        'greeting-text': String,
+      },
+    };
+
+    // good
+    export default {
+      props: {
+        greetingText: String,
+      },
+    };
+
+    <!-- bad -->
+    <welcome-message greetingText="hi" />
+
+    <!-- good -->
+    <welcome-message greeting-text="hi" />
+
+7. Props 顺序
+    标签的 Props 应该有统一的顺序，依次为指令、属性和事件。
+
+    <my-component
+      v-if="if"
+      v-show="show"
+      v-model="value"
+      ref="ref"
+      :key="key"
+      :text="text"
+      @input="onInput"
+      @change="onChange"
+    />
+8. compnents name
+   组件的name属性官方推荐小驼峰或者短横线，我们统一使用短横线
+
+8. 组件选项的顺序
+    组件选项应该有统一的顺序。
+    export default {
+      name: '',
+
+      components: {},
+
+      props: {},
+
+      emits: [],
+
+      setup() {},
+
+      data() {},
+
+      computed: {},
+
+      watch: {},
+
+      created() {},
+
+      mounted() {},
+
+      unmounted() {},
+
+      methods: {},
+    };
+
+9. 组件选项中的空行
+    组件选项较多时，建议在属性之间添加空行。
+
+    export default {
+      computed: {
+        formattedValue() {
+          // ...
+        },
+
+        styles() {
+          // ...
+        },
+      },
+
+      methods: {
+        onInput() {
+          // ...
+        },
+
+        onChange() {
+          // ...
+        },
+      },
+    };
+
+10. 单文件组件顶级标签的顺序
+    单文件组件应该总是让顶级标签的顺序保持一致，且标签之间留有空行。
+
+    <template>
+      ...
+    </template>
+
+    <script>
+      /* ... */
+    </script>
+
+    <style>
+      /* ... */
+    </style>
+
+11。 router 命名规则
+    { path: /user-info, name: UserInfo} 使用短横线, user_info 这种会被解析成一个单词(user_info),
+  

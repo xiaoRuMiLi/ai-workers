@@ -1,0 +1,67 @@
+<!--
+ * @Description: 
+ * @User: King <303219462@qq.com>
+ * @Date: 2024-03-31 19:18:49
+-->
+<!DOCTYPE html>
+<head>
+    <title>
+        node 包管理工具
+    </title>
+</head>
+<body>
+    <h3> 全局安装和局部安装</h3>
+    <p>
+        全局安装是将npm包安装在你的node安装目录下的node_modules文件夹中。在windows和mac中，全局安装的默认路径是不同的。在mac中默认是安装到/usr/locla/lib中。
+        在windows默认安装目录是C:\Program Files\nodejs，当然你也可以通过一下命令来查看全局安装路径。
+        原文链接：https://blog.csdn.net/youshowkm/article/details/130566390<br>
+        npm包在全局安装之后，这个包的命令就会被注册到全局，你就可以直接在命令行中执行这个命令了。
+        其实当你全局安装一个npm包之后，这个包被存放在/usr/locla/lib/node_modules或者C:\Program Files\nodejs\node_modules目录下。
+        而在这个包的package.json文件中，在bin属性下配置的执行命令，会放在/usr/locla/bin或者C:\Program Files\nodejs文件中。当你在命令行执行这个命令，系统就会执行/usr/locla/bin目录下对应的文件。
+        ————————————————
+
+        在特定项目中执行npm install xxx，那么这个包会被安装在这个项目的node_moduels目录下。但是如果你在这个项目中直接执行包中的命令，就会发现控制台报错，告诉你这个命令找不到。这时候有两个解决方法：
+        使用npx执行：npx出现主要解决的问题就是调用项目内部安装的模块，所以你可以在项目中执行npx 包命令。
+        在package.json文件中配置：
+        "scripts": {
+            "包命令": "包命令",
+        }复制代码
+        原理： 在本地安装一个包之后，这个包的命令会被添加到项目的node_modules/.bin文件中。执行npm run 命令,package.json中的scripts会按照一定顺序寻找对应命令的位置，本地的node_modules/.bin也在寻找的清单中。所以本地安装的包的命令可以执行。
+        ————————————————
+        版权声明：本文为CSDN博主「中国红客99代传人」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+
+        原文链接：https://blog.csdn.net/youshowkm/article/details/130566390
+    </p>
+    <pre>
+        // 常用命令
+        npm install -g @vue/cli 安装vue包到/usr/locla/lib/node_modules。
+        查找node_modules目录下的vue包的package.json中的bin属性里面是对应脚本存放位置
+
+        // 本地安装
+        npm install xxx 
+        // 查看全局安装路径
+        npm root -g
+        
+        // 查看npm的基础设置
+        npm config ls
+        
+        // 查看安装目录路径
+        npm config get prefix复制代码
+    </pre>
+    <p> 总结: 全局安装时安装到node项目下,所有项目都可以引用, 局部安装是安装到项目目录下的node_modules目录下. node_modules目录下package.json 对应包的bin属性,里面有对应命令和和命令相关的文件存放位置,<br>
+        当你执行这个命令就会执行相应的文件. 命令文件存放位置为 会放在/usr/locla/bin或者C:\Program Files\nodejs文件中.
+    </p>
+
+    <h3> 报错npm ERR! code CERT_HAS_EXPIRED npm ERR! errno CERT_HAS_EXPIRED npm ERR! request to</h3>
+    <pre>
+        有时候本地时间和标准时间有差别也会出现这个报错，这时候就要设置本地时间。
+        清除npm缓存
+        npm cache clean --force
+        取消ssl验证：
+        npm config set strict-ssl false
+        之后再npm install 
+    </pre>
+
+    
+</body>
+</html>

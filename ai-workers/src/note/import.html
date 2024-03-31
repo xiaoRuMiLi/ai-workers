@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        import 语法
+    </title>
+</head>
+<body>
+    <h2>
+        ES6 加载某个文件夹下所有符合规则的文件，做到一次加载多个文件方法
+
+    </h2>
+    <p>
+        require.context()方法
+        <pre>
+            作用：创建当前模块的上下文
+            require.context(directory, flag, regExp)
+            directory: 要导入的当前模块的文件夹目录
+            flag: 是否搜索当前路径的子目录
+            regExp: 要匹配的文件
+
+            1、常常用来在组件内引入多个组件。
+            const path = require('path')
+            const files = require.context('@/components/home', false, /\.vue$/)
+            const modules = {}
+            files.keys().forEach(key => {
+                const name = path.basename(key, '.vue')
+                modules[name] = files(key).default || files(key)
+            })
+            export default{
+                ...
+                components:modules
+            }
+           
+            在main.js中引入大量公共组件
+
+            import Vue from 'vue'
+            // 自定义组件
+            const requireComponents = require.context('../views/components', true, /\.vue/)
+            // 打印结果
+            // 遍历出每个组件的路径
+            requireComponents.keys().forEach(fileName => {
+            // 组件实例
+            const reqCom = requireComponents(fileName)
+            // 截取路径作为组件名
+            const reqComName =reqCom.name|| fileName.replace(/\.\/(.*)\.vue/,'$1')
+            // 组件挂载
+            Vue.component(reqComName, reqCom.default || reqCom)
+            })
+        </pre>
+    </p>
+    <a href="https://blog.csdn.net/diaojw090/article/details/110828200" >使用详解原文转载</a>
+</body>
+</html>
