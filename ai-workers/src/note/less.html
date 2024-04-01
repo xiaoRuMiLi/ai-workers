@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Author: lyq
+ * @Date: 2024-04-01 11:39:43
+ * @LastEditTime: 2024-04-01 15:38:35
+ * @LastEditors: lyq
+-->
 <!DOCTYPE html>
 <head>
     <title>
@@ -36,6 +43,8 @@
                         less: {
                             // less文件路径
                             additionalData: `@import "src/assets/css/theme.less";`,
+                            // 这个设置的意思是告诉构建工具在处理Less文件时启用JavaScript功能。在Less文件中，有时候可能需要使用JavaScript代码，比如函数调用或者变量定义等，通过设置javascriptEnabled为true，可以让Less文件支持这些特性。
+                            javascriptEnabled: true,
                         }
                     }
                 },

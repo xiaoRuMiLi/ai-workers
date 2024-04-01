@@ -1,25 +1,88 @@
 {
+  /*
+  tsconfig.json 配置文件，它包含了 TypeScript 编译器的一些配置选项。让我逐步为您解释这些配置的含义：
+  "compilerOptions": 这个部分包含了 TypeScript 编译器的配置选项。
+  "target": "esnext": 编译后的 JavaScript 代码目标 ECMAScript 版本为 ESNext。
+  "module": "esnext": 使用 ES 模块作为输出格式。
+  "moduleResolution": "node": 模块解析策略为 Node.js 风格。
+  "strict": true: 启用所有严格类型检查选项。
+  "forceConsistentCasingInFileNames": true: 强制文件名大小写保持一致。
+  "allowSyntheticDefaultImports": true: 允许导入没有默认导出的模块。
+  "strictFunctionTypes": false: 不强制函数类型检查严格一致性。
+  "jsx": "preserve": 保留 JSX 代码以供后续的转换。
+  "baseUrl": ".": 用于解析非相对模块的基准目录。
+  "allowJs": true: 允许编译 JavaScript 文件。
+  "sourceMap": true: 生成 source map 文件以便调试。
+  "esModuleInterop": true: 启用允许导入 CommonJS 模块的 esModuleInterop 选项。
+  "resolveJsonModule": true: 允许导入 JSON 模块。
+  "noUnusedLocals": true: 报告未使用的本地变量。
+  "noUnusedParameters": true: 报告未使用的函数参数。
+  "experimentalDecorators": true: 启用实验性的装饰器特性。
+  "lib": ["dom", "esnext"]: 编译时需要引入的库文件。
+  "typeRoots": ["./node_modules/@types/", "./types"]: 类型定义文件的查找路径。
+  "noImplicitAny": false: 允许隐式的 any 类型。
+  "skipLibCheck": true: 跳过声明文件的类型检查。
+  "paths": 模块解析路径映射。
+  "include": 指定哪些文件应该包含在编译中。
+
+  包括了 TypeScript 文件、声明文件、Vue 文件等。
+  "exclude": 指定哪些文件应该排除在编译之外。
+
+  排除了 node_modules 目录、dist 目录和所有的 JavaScript 文件。
+  通过这些配置，TypeScript 编译器将会按照指定的规则对项目中的 TypeScript 文件进行编译，并在编译过程中进行严格类型检查以确保代码质量和一致性。
+  */
+  // 编译选项
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "preserve",
-
-    /* Linting */
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
     "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "strictFunctionTypes": false,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "allowJs": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "typeRoots": [
+      "./node_modules/@types/",
+      "./types"
+    ],
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "/#/*": [
+        "types/*"
+      ]
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "types/**/*.d.ts",
+    "types/**/*.ts",
+    "build/**/*.ts",
+    "build/**/*.d.ts",
+    "components.d.ts",
+    "vite.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.js"
+  ]
 }
