@@ -1,8 +1,3 @@
-<!--
- * @Description: 
- * @User: King <303219462@qq.com>
- * @Date: 2024-03-31 19:18:49
--->
 <!DOCTYPE html>
 <head>
     <title>
@@ -51,16 +46,6 @@
     <p> 总结: 全局安装时安装到node项目下,所有项目都可以引用, 局部安装是安装到项目目录下的node_modules目录下. node_modules目录下package.json 对应包的bin属性,里面有对应命令和和命令相关的文件存放位置,<br>
         当你执行这个命令就会执行相应的文件. 命令文件存放位置为 会放在/usr/locla/bin或者C:\Program Files\nodejs文件中.
     </p>
-
-    <h3> 报错npm ERR! code CERT_HAS_EXPIRED npm ERR! errno CERT_HAS_EXPIRED npm ERR! request to</h3>
-    <pre>
-        有时候本地时间和标准时间有差别也会出现这个报错，这时候就要设置本地时间。
-        清除npm缓存
-        npm cache clean --force
-        取消ssl验证：
-        npm config set strict-ssl false
-        之后再npm install 
-    </pre>
 
     
 </body>

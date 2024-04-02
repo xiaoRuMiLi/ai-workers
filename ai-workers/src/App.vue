@@ -1,12 +1,10 @@
 <!--
  * @Description: 
- * @Author: lyq
- * @Date: 2024-04-01 11:39:43
- * @LastEditTime: 2024-04-01 15:26:50
- * @LastEditors: lyq
+ * @User: King <303219462@qq.com>
+ * @Date: 2024-04-01 22:19:32
 -->
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from '@/components/HelloWorld.vue'
 </script>
 
 <template>
@@ -21,7 +19,7 @@ import HelloWorld from './components/HelloWorld.vue'
   <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style lang="less" scoped>
+<style scoped lang="less">
 .logo {
   height: 6em;
   padding: 1.5em;
