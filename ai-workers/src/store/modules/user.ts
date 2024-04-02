@@ -1,10 +1,15 @@
+/*
+ * @Description: 
+ * @User: King <303219462@qq.com>
+ * @Date: 2024-04-02 18:20:40
+ */
 import { defineStore } from 'pinia';
 import { store } from '@/store';
 import { ACCESS_TOKEN, CURRENT_USER, IS_SCREENLOCKED } from '@/store/mutation-types';
 import { ResultEnum } from '@/enums/httpEnum';
 
 import { getUserInfo as getUserInfoApi, login } from '@/api/system/user';
-import { storage } from '@/utils/Storage';
+import { localCache } from '@/utils/Storage';
 
 export type UserInfoType = {
   // TODO: add your own data
@@ -24,12 +29,12 @@ export interface IUserState {
 export const useUserStore = defineStore({
   id: 'app-user',
   state: (): IUserState => ({
-    token: storage.get(ACCESS_TOKEN, ''),
+    token: localCache.get(ACCESS_TOKEN, ''),
     username: '',
     welcome: '',
     avatar: '',
     permissions: [],
-    info: storage.get(CURRENT_USER, {}),
+    info: localCache.get(CURRENT_USER, {}),
   }),
   getters: {
     getToken(): string {
@@ -67,9 +72,9 @@ export const useUserStore = defineStore({
       const { result, code } = response;
       if (code === ResultEnum.SUCCESS) {
         const ex = 7 * 24 * 60 * 60;
-        storage.set(ACCESS_TOKEN, result.token, ex);
-        storage.set(CURRENT_USER, result, ex);
-        storage.set(IS_SCREENLOCKED, false);
+        localCache.set(ACCESS_TOKEN, result.token, ex);
+        localCache.set(CURRENT_USER, result, ex);
+        localCache.set(IS_SCREENLOCKED, false);
         this.setToken(result.token);
         this.setUserInfo(result);
       }
@@ -94,13 +99,13 @@ export const useUserStore = defineStore({
     async logout() {
       this.setPermissions([]);
       this.setUserInfo({ name: '', email: '' });
-      storage.remove(ACCESS_TOKEN);
-      storage.remove(CURRENT_USER);
+      localCache.remove(ACCESS_TOKEN);
+      localCache.remove(CURRENT_USER);
     },
   },
 });
 
 // Need to be used outside the setup
-export function useUser() {
+export function useUserStoreInstance() {
   return useUserStore(store);
 }
