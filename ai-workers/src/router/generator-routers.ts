@@ -1,4 +1,4 @@
-
+// 提供动态生成路由的方法
 import { RouteRecordRaw } from 'vue-router';
 import { Layout, ParentLayout } from '@/router/constant';
 import type { AppRouteRecordRaw } from '@/router/types';
@@ -80,6 +80,7 @@ export const generatorDynamicRouter = (): Promise<RouteRecordRaw[]> => {
  * 查找views中对应的组件文件
  * */
 let viewsModules: Record<string, () => Promise<Recordable>>;
+// 这里动态
 export const asyncImportRoute = (routes: AppRouteRecordRaw[] | undefined): void => {
   viewsModules = viewsModules || import.meta.glob('../views/**/*.{vue,tsx}');
   if (!routes) return;

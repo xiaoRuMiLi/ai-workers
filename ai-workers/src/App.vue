@@ -12,21 +12,14 @@
         :theme-overrides="themeOverrides"
         :date-locale="dateZhCN"
     >
-        <Layout>
-        <a href="https://vitejs.dev" target="_blank">
-            <img src="/vite.svg" class="logo" alt="Vite logo" />
-        </a>
-        <a href="https://vuejs.org/" target="_blank">
-            <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-        </a>
-        </Layout>
+    <RouterView />
+
     </NConfigProvider>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 <script setup lang="ts" >
 import { ref } from "vue";
-import Layout from "@/layout/index.vue";
+// import Layout from "@/layout/index.vue";
 import { NConfigProvider } from 'naive-ui'
 import { zhCN, dateZhCN, darkTheme, GlobalThemeOverrides} from 'naive-ui';
 

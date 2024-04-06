@@ -3,19 +3,19 @@
     <div class="layout-container">
         <!-- 头部区域 -->
         <header class="layout-header">Header Area</header>
-        
-        <!-- 侧边栏区域 -->
-        <aside class="layout-sidebar">
-            <!-- 侧边栏内容可以根据需要进一步细分 -->
-            <nav>Sidebar Content</nav>
-        </aside>
-        
-        <!-- 主内容区域 -->
-        <main class="layout-main">
-            <!-- 这里放置页面主要内容 -->
-            <slot></slot>
-        </main>
-        
+        <section class="middle">
+            <!-- 侧边栏区域 -->
+            <aside class="layout-sidebar">
+                <!-- 侧边栏内容可以根据需要进一步细分 -->
+                <nav>Sidebar Content</nav>
+            </aside>
+            
+            <!-- 主内容区域 -->
+            <main class="layout-main">
+                <!-- 这里放置页面主要内容 -->
+                <slot></slot>
+            </main>
+        </section>
         <!-- 底部区域 -->
         <footer class="layout-footer">Footer Area</footer>
     </div>
@@ -88,6 +88,9 @@
         /* 主内容区样式 */
         flex: 1; /* 可伸缩，占据剩余空间 */
         padding: 1rem;
+    }
+    .middle {
+        display: flex;
     }
 </style>
 

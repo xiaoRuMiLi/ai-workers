@@ -1,3 +1,8 @@
+/*
+ * @Description: 
+ * @User: King <303219462@qq.com>
+ * @Date: 2024-04-02 21:10:11
+ */
 export enum PageEnum {
   // 登录
   BASE_LOGIN = '/login',

@@ -1,3 +1,8 @@
+/*
+ * @Description: 
+ * @User: King <303219462@qq.com>
+ * @Date: 2024-04-02 19:40:25
+ */
 const setting = {
   //导航模式 vertical 左侧菜单模式 horizontal 顶部菜单模式
   navMode: 'vertical',
@@ -48,7 +53,7 @@ const setting = {
     showIcon: false,
   },
   //菜单权限模式 FIXED 前端固定路由  BACK 动态获取
-  permissionMode: 'FIXED',
+  permissionMode: 'BACK',
   //是否开启路由动画
   isPageAnimate: true,
   //路由动画类型

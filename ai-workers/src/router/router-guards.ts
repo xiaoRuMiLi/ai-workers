@@ -8,7 +8,8 @@ import { PageEnum } from '@/enums/pageEnum';
 import { ErrorPageRoute } from '@/router/base';
 
 const LOGIN_PATH = PageEnum.BASE_LOGIN;
-// LOGIN_PATH = "/login"对应路由path属性
+// LOGIN_PATH = "/login"对应路由path属性, 
+// 定义不需要重定向的白名单路由
 const whitePathList = [LOGIN_PATH]; // no redirect whitelist
 
 export function createRouterGuards(router: Router) {
@@ -21,21 +22,27 @@ export function createRouterGuards(router: Router) {
     const Loading = window['$loading'] || null;
     Loading && Loading.start();
     if (from.path === LOGIN_PATH && to.name === 'errorPage') {
+      console.log("base home 去到首页");
       next(PageEnum.BASE_HOME);
       return;
     }
 
     // Whitelist can be directly entered
     if (whitePathList.includes(to.path as PageEnum)) {
+      console.log("属于白名单不需要重定向");
       next();
       return;
     }
     const token = localCache.get(ACCESS_TOKEN);
+    console.log(`token is ${token}`);
     // 如果token不存在
-    if (!token) {
+    //if (!token) {
+    // 我这里暂时不判断登录，因为这个不是每个页面都需要登录的
+    if (false) {
       // You can access without permissions. You need to set the routing meta.ignoreAuth to true
       // ignoreAuth 忽略身份验证。 如果to路由为忽略身份验证的。
       if (to.meta.ignoreAuth) {
+        console.log("没有token,但是 to.meta.ignoreAuth 为true 该路由不需要登录");
         next();
         return;
       }
@@ -52,6 +59,7 @@ export function createRouterGuards(router: Router) {
           redirect: to.path, // 登陆后会重定向到redirect值。重定向到to.path
         };
       }
+      console.log("没有token,该路由需要登录验证重定向到login");
       next(redirectData);
       return;
     }

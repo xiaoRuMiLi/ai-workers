@@ -104,9 +104,9 @@ export const useAsyncRouteStore = defineStore({
          * @param userData User data object
          * @returns Array of routes that the user has permission to access
          */
-        async generateRoutes(userData: any) {
+        async generateRoutes(userData: any = null) {
             let accessedRouters;
-            const permissionsList = userData.permissions || []; // 获取用户权限列表
+            const permissionsList = userData?.permissions || []; // 获取用户权限列表,如果吗，没有传送userData 那么就不验证权限
             const routeFilter = (route: RouteRecordRaw) => {
                 const { meta } = route;
                 const { permissions } = meta || {};
@@ -114,6 +114,7 @@ export const useAsyncRouteStore = defineStore({
                 return permissionsList.some((item) => permissions.includes(item.value)); // 检查路由是否在权限列表中
             };
             const { getPermissionMode } = useProjectSetting();
+            // 如果是权限模式那么根据权限生成路由，否则生成全部路由 BACK为动态获取
             const permissionMode = unref(getPermissionMode); // 获取权限模式
             if (permissionMode === 'BACK') {
                 try {
@@ -133,6 +134,7 @@ export const useAsyncRouteStore = defineStore({
             this.setMenus(accessedRouters); // 设置菜单
             return toRaw(accessedRouters); // 返回原始数据
         },
+        
     },
 });
 
