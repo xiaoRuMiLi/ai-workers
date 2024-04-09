@@ -6,8 +6,8 @@
 <template>
     <n-card class="login-card">
       <n-form ref="loginForm" :model="form" :rules="rules" label-width="120px">
-        <n-form-item label="用户名" path="username">
-          <n-input v-model:value="form.username" placeholder="请输入用户名" />
+        <n-form-item label="电话号码" path="phone">
+          <n-input v-model:value="form.phone" placeholder="请输入电话号码" />
         </n-form-item>
         <n-form-item label="密码" path="password">
           <n-input v-model:value="form.password" type="password" placeholder="请输入密码" />
@@ -23,11 +23,13 @@
   <script setup lang="ts">
   import { ref, reactive } from 'vue';
   import { NCard, NForm, NFormItem, NInput, NButton, NAlert } from 'naive-ui';
+  import { useUserStoreInstance  } from '@/store/modules/user';
   import { useRouter } from 'vue-router';
   
+  const userStore = useUserStoreInstance();
   // 定义表单数据
   const form = reactive({
-    username: '',
+    phone: '',
     password: '',
   });
   
@@ -43,33 +45,15 @@
   
   // 定义登录方法
   const handleLogin = async () => {
-    try {
-      loading.value = true;
-      // 这里应该调用API进行登录验证，以下代码仅为示例
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-      const data = await response.json();
-      if (data.success) {
-        // 登录成功，导航到主页或其他页面
-        useRouter().push('/dashboard');
-      } else {
-        // 登录失败，显示错误信息
-        error.value = data.message || '登录失败';
-      }
-    } catch (error) {
-      console.error('登录请求失败:', error);
-      error.value = '登录请求失败';
-    } finally {
-      loading.value = false;
-    }
+    
+    const data = await userStore.login(form);
+    console.log(data);
+    
   };
   
   // 定义表单重置方法
   const resetForm = () => {
-    form.username = '';
+    form.phone = '';
     form.password = '';
     error.value = '';
   };

@@ -1,9 +1,16 @@
+/*
+ * @Description: 
+ * @Author: lyq
+ * @Date: 2024-04-07 12:44:13
+ * @LastEditTime: 2024-04-09 16:35:56
+ * @LastEditors: lyq
+ */
 import { http } from '@/utils/http/axios';
 
 export interface BasicResponseModel<T = any> {
   code: number;
   message: string;
-  result: T;
+  data: T;
 }
 
 export interface BasicPageParams {
@@ -17,7 +24,7 @@ export interface BasicPageParams {
  */
 export function getUserInfo() {
   return http.request({
-    url: '/admin_info',
+    url: '/user_info',
     method: 'get',
   });
 }
@@ -28,7 +35,7 @@ export function getUserInfo() {
 export function login(params) {
   return http.request<BasicResponseModel>(
     {
-      url: '/login',
+      url: '/login_by_auth',
       method: 'POST',
       params,
     },

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lyq
  * @Date: 2024-04-01 11:39:43
- * @LastEditTime: 2024-04-02 11:38:30
+ * @LastEditTime: 2024-04-09 16:35:17
  * @LastEditors: lyq
  */
 
@@ -12,6 +12,7 @@ import path from 'path';
 export default defineConfig(({command, mode}) => {
     // 获取当前环境的配置,就是.env.devalopment 里面的值,或.envproduction里面的值,
     const config = loadEnv(mode, './');
+    console.log("env", config);
     return {
         mode: 'development',
         plugins: [
@@ -43,9 +44,10 @@ export default defineConfig(({command, mode}) => {
             proxy: {
                 // 这三种跨域设置都是可以的
                 '/laravel': {
-                    // 使用配置文件的值
-                    target: config.VITE_BASIC_API,
+                    // 使用配置文件的值，如果是以该属性名/laravel开始的接口就会被代理到target
+                    target: config.VITE_GLOB_API_URL,
                     changeOrigin: true,
+                    // 是个函数接受path参数是API接口返回处理后的API接口
                     rewrite: (path) => path.replace(/^\/laravel/, '')
                 },
                 /*
@@ -62,7 +64,6 @@ export default defineConfig(({command, mode}) => {
                     // proxy 是 'http-proxy' 的实例
                     },
                 },*/
-                '//car3.autoimg.cn': "https://car3.autoimg.cn",
             }
         },
         // 禁用或配置hmr 连接

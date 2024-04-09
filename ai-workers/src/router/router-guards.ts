@@ -38,7 +38,7 @@ export function createRouterGuards(router: Router) {
     // 如果token不存在
     //if (!token) {
     // 我这里暂时不判断登录，因为这个不是每个页面都需要登录的
-    if (false) {
+    if (!token) {
       // You can access without permissions. You need to set the routing meta.ignoreAuth to true
       // ignoreAuth 忽略身份验证。 如果to路由为忽略身份验证的。
       if (to.meta.ignoreAuth) {

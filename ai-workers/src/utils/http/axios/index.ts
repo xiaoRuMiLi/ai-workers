@@ -16,7 +16,7 @@ import { RequestOptions, Result, CreateAxiosOptions } from './types';
 
 import { useUserStoreInstance } from '@/store/modules/user';
 
-const urlPrefix = '';
+const urlPrefix = '/aihelper_v1';
 
 import router from '@/router';
 import { localCache } from '@/utils/Storage';
@@ -49,7 +49,7 @@ const transform: AxiosTransform = {
     if (!isTransformResponse) {
       return res.data;
     }
-
+    console.log('请求返回相应', res);
     const { data } = res;
 
     const $dialog = window['$dialog'];
@@ -237,6 +237,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
     deepMerge(
       {
         timeout: 10 * 1000,
+        // token， 如果withToken == true requestInterceptors函数中会重新赋值
         authenticationScheme: '',
         // 接口前缀
         prefixUrl: urlPrefix,
@@ -257,9 +258,9 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           formatDate: true,
           // 消息提示类型
           errorMessageMode: 'none',
-          // 接口地址
+          // 接口地址 这里设置AURL前缀, 这两项是 http:127.0.0.3000:8000/{apiUrl}{urlPrefix}{函数路由}
           //apiUrl: globSetting.apiUrl,
-          apiUrl: "err API url ",
+          apiUrl: "/laravel",
           // 接口拼接地址
           urlPrefix: urlPrefix,
           //  是否加入时间戳

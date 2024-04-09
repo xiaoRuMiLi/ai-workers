@@ -48,7 +48,7 @@ export class VAxios {
   }
 
   /**
-   * @description:   请求方法
+   * @description:   请求方法，
    */
   request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     let conf: AxiosRequestConfig = cloneDeep(config);

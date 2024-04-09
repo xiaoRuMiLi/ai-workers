@@ -69,14 +69,14 @@ export const useUserStore = defineStore({
     // 登录
     async login(params: any) {
       const response = await login(params);
-      const { result, code } = response;
+      const { data, code } = response;
       if (code === ResultEnum.SUCCESS) {
         const ex = 7 * 24 * 60 * 60;
-        localCache.set(ACCESS_TOKEN, result.token, ex);
-        localCache.set(CURRENT_USER, result, ex);
+        localCache.set(ACCESS_TOKEN, data.token, ex);
+        localCache.set(CURRENT_USER, data, ex);
         localCache.set(IS_SCREENLOCKED, false);
-        this.setToken(result.token);
-        this.setUserInfo(result);
+        this.setToken(data.token);
+        this.setUserInfo(data);
       }
       return response;
     },
