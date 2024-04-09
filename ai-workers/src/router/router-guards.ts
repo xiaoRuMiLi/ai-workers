@@ -15,7 +15,7 @@ const whitePathList = [LOGIN_PATH]; // no redirect whitelist
 export function createRouterGuards(router: Router) {
   const userStore = useUserStoreInstance();
   const asyncRouteStore = useAsyncRouteStoreInstance();
-
+  
   router.beforeEach(async (to, from, next) => {
 
     console.log("beforeEach__to", to, "beforeEach__from", from);
@@ -34,7 +34,6 @@ export function createRouterGuards(router: Router) {
       return;
     }
     const token = localCache.get(ACCESS_TOKEN);
-    console.log(`token is ${token}`);
     // 如果token不存在
     //if (!token) {
     // 我这里暂时不判断登录，因为这个不是每个页面都需要登录的
@@ -69,14 +68,14 @@ export function createRouterGuards(router: Router) {
       next();
       return;
     }
-    
+    // 每次userStore.getInfo都会调用API访问后端
     const userInfo = await userStore.getInfo();
+    console.log("userInfouserInfo", userInfo);
     // 根据userInfo 生成路由
     // routes 用户具有权限的路由数组，路由中meta.permissios 和用户 permissions 有相同的数组元素的路由
     const routes = await asyncRouteStore.generateRoutes(userInfo);
-
-    // routers 是route/modules/**包里面的路由文件
     console.log("routes__", routes);
+    // routers 是route/modules/**包里面的路由文件
     // 和上面一样的值console.log("asyncRouteStore:",asyncRouteStore.getRouters());
 
     // 动态添加可访问路由表，就是添加modules里面所有的路由添加进去。

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lyq
  * @Date: 2024-04-02 17:12:46
- * @LastEditTime: 2024-04-06 21:21:27
+ * @LastEditTime: 2024-04-09 23:32:26
  * @LastEditors: Please set LastEditors
  */
 import { App } from 'vue';
@@ -23,7 +23,7 @@ function sortRoute(a, b) {
 }
 
 routeModuleList.sort(sortRoute);
-
+// console.log("route list", routeModuleList);
 
 //需要验证权限
 export const asyncRoutes = [...routeModuleList];
@@ -44,6 +44,11 @@ export function setupRouter(app: App) {
   // 创建路由守卫
   createRouterGuards(router);
 }
+// 全局前置守卫
+router.beforeEach((to, from, next) => {
+  console.log("to.matched[0].components", to); // 注意这里的属性是 components 而不是 component
+  next();
+});
 
 export default router;
 

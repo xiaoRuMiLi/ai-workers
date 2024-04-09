@@ -1,10 +1,9 @@
 <!--
- * @Description: 
+ * @Description: 以下是一个使用 Vue 3 和 TypeScript 的 setup 语法编写的简单的 403 错误提示组件的示例：
  * @User: King <303219462@qq.com>
  * @Date: 2024-04-02 22:54:14
 -->
 
-以下是一个使用 Vue 3 和 TypeScript 的 setup 语法编写的简单的 403 错误提示组件的示例：
 
 <template>
   <div class="forbidden">

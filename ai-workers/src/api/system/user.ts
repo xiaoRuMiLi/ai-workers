@@ -2,8 +2,8 @@
  * @Description: 
  * @Author: lyq
  * @Date: 2024-04-07 12:44:13
- * @LastEditTime: 2024-04-09 16:35:56
- * @LastEditors: lyq
+ * @LastEditTime: 2024-04-09 21:21:35
+ * @LastEditors: Please set LastEditors
  */
 import { http } from '@/utils/http/axios';
 
@@ -23,10 +23,14 @@ export interface BasicPageParams {
  * @description: 获取用户信息
  */
 export function getUserInfo() {
-  return http.request({
+  return http.request<BasicResponseModel>({
     url: '/user_info',
     method: 'get',
-  });
+  },
+  {
+    isTransformResponse: false, //不加这个属性就返回不了数剧
+  }
+  );
 }
 
 /**

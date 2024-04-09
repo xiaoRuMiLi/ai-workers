@@ -66,7 +66,7 @@ export const useAsyncRouteStore = defineStore({
         routers: constantRouter, // 初始路由为常量路由
         addRouters: [], // 初始动态添加路由为空数组
         keepAliveComponents: [], // 初始缓存组件为空数组
-        isDynamicAddedRoute: false, // 初始未动态添加过路由
+        isDynamicAddedRoute: false, // 初始为动态添加路由，如果为true则route/modules里面的 如果为true则router/modules里面的路由都不会被添加到用户
     }),
     getters: {
         getMenus(): RouteRecordRaw[] {
@@ -111,10 +111,11 @@ export const useAsyncRouteStore = defineStore({
                 const { meta } = route;
                 const { permissions } = meta || {};
                 if (!permissions) return true;
-                return permissionsList.some((item) => permissions.includes(item.value)); // 检查路由是否在权限列表中
+                return permissionsList.some((item) => permissions.includes(item)); // 检查路由是否在权限列表中
             };
             const { getPermissionMode } = useProjectSetting();
-            // 如果是权限模式那么根据权限生成路由，否则生成全部路由 BACK为动态获取
+            // 如果是权限模式为BACK， 那么访问API adminMenu 根据返回生成路由树，
+            // 否则根据权限生成路由树
             const permissionMode = unref(getPermissionMode); // 获取权限模式
             if (permissionMode === 'BACK') {
                 try {

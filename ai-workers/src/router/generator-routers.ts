@@ -2,14 +2,8 @@
 import { RouteRecordRaw } from 'vue-router';
 import { Layout, ParentLayout } from '@/router/constant';
 import type { AppRouteRecordRaw } from '@/router/types';
-// 暂时不处理，给一个空值
-//const constantRouterIcon = null;
-// 模拟一个API,后期换真实的
-const adminMenus = async () => {
-  return new Promise(() => {
-    return [{name: "name", path: "path", component: null, meta: {title: "meta_title", Permissions: ["permission1"]}}];
-  });
-}
+import { adminMenus } from '@/api/system/menu';
+
 const Iframe = () => import('@/views/iframe/index.vue');
 const LayoutMap = new Map<string, () => Promise<typeof import('*.vue')>>();
 
@@ -19,7 +13,7 @@ LayoutMap.set('IFRAME', Iframe);
 /**
  * 格式化 后端 结构信息并递归生成层级路由表
  * @param routerMap
- * @param parent
+ * @param parent // 如果传入父级路由的path 会被拼接到前面
  * @returns {*}
  */
 export const routerGenerator = (routerMap, parent?): any[] => {
@@ -53,11 +47,12 @@ export const routerGenerator = (routerMap, parent?): any[] => {
       currentRouter.children = routerGenerator(item.children, currentRouter);
     }
     return currentRouter;
+    
   });
 };
 
 /**
- * 动态生成菜单
+ * 动态生成路由
  * @returns {Promise<Router>}
  */
 export const generatorDynamicRouter = (): Promise<RouteRecordRaw[]> => {
@@ -67,7 +62,6 @@ export const generatorDynamicRouter = (): Promise<RouteRecordRaw[]> => {
       .then((result) => {
         const routeList = routerGenerator(result);
         asyncImportRoute(routeList);
-
         resolve(routeList);
       })
       .catch((err) => {

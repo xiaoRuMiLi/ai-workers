@@ -30,9 +30,9 @@ const routes: Array<RouteRecordRaw> = [
         title: 'Dashboard',
         icon: renderIcon(DashboardOutlined),
         // userInfo必须要有以下权限中的一种才会被添加到路由中
-        permissions: ['dashboard_console', 'dashboard_console', 'dashboard_workplace'],
+        permissions: ['visitor'],
         // ignoreAuth 为true 不需要身份验证
-        ignoreAuth: true,
+        //ignoreAuth: true,
         // 用来给路由排序
         sort: 0,
     },
@@ -42,9 +42,9 @@ const routes: Array<RouteRecordRaw> = [
         name: `${routeName}_console`,
         meta: {
             title: '主控台',
-            permissions: ['dashboard_console'],
+            permissions: ['visitor'],
             // ignoreAuth 为true 不需要身份验证
-            ignoreAuth: true,
+            //ignoreAuth: true,
             affix: true,
         },
         component: () => import('@/views/dashboard/index.vue'),
@@ -64,7 +64,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             title: '工作台',
             keepAlive: true,
-            permissions: ['dashboard_workplace'],
+            permissions: ['visitor'],
         },
         component: () => import('@/views/dashboard/index.vue'),
       },

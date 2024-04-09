@@ -22,7 +22,7 @@ export interface IUserState {
   username: string;
   welcome: string;
   avatar: string;
-  permissions: any[];
+  permissions: any[]; //字符组成的数组
   info: UserInfoType;
 }
 
@@ -68,31 +68,45 @@ export const useUserStore = defineStore({
     },
     // 登录
     async login(params: any) {
-      const response = await login(params);
-      const { data, code } = response;
-      if (code === ResultEnum.SUCCESS) {
-        const ex = 7 * 24 * 60 * 60;
-        localCache.set(ACCESS_TOKEN, data.token, ex);
-        localCache.set(CURRENT_USER, data, ex);
-        localCache.set(IS_SCREENLOCKED, false);
-        this.setToken(data.token);
-        this.setUserInfo(data);
+      try {
+        const response = await login(params);
+        const { data, code } = response;
+        if (code === ResultEnum.SUCCESS) {
+          const ex = 7 * 24 * 60 * 60;
+          localCache.set(ACCESS_TOKEN, data.token, ex);
+          localCache.set(CURRENT_USER, data, ex);
+          localCache.set(IS_SCREENLOCKED, false);
+          this.setToken(data.token);
+          this.setUserInfo(data);
+        }
+        return Promise.resolve(response);
+      } catch (e)
+      {
+        return Promise.reject(e);
       }
-      return response;
     },
 
     // 获取用户信息
-    async getInfo() {
-      const result = await getUserInfoApi();
-      if (result.permissions && result.permissions.length) {
-        const permissionsList = result.permissions;
-        this.setPermissions(permissionsList);
-        this.setUserInfo(result);
-      } else {
-        throw new Error('getInfo: permissionsList must be a non-null array !');
+    async getInfo (): Promise<any> {
+      try {
+        const response = await getUserInfoApi();
+        const { data, code } = response;
+        if (code === ResultEnum.SUCCESS) {
+          if (data.permissions && data.permissions.length) {
+            const permissionsList = data.permissions;
+            this.setPermissions(permissionsList);
+            this.setUserInfo(data);
+          } else {
+            throw new Error('getInfo: permissionsList must be a non-null array !');
+          }
+          this.setAvatar((data?.avatar) ?? "");
+        }
+        return Promise.resolve(data);
+      } catch (e)
+      {
+        return Promise.reject(e);
       }
-      this.setAvatar(result.avatar);
-      return result;
+      
     },
 
     // 登出

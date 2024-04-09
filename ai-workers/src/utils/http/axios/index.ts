@@ -241,7 +241,8 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
       {
         timeout: 10 * 1000,
         // token， 如果withToken == true requestInterceptors函数中会重新赋值，这个属性会拼接到token字符前面
-        authenticationScheme: '',
+        // 注意这里不要在Bearer后面加空格因为系统会用空格符拼接到token上，加了空格提示token错误
+        authenticationScheme: 'Bearer',
         // 接口前缀
         prefixUrl: urlPrefix,
         headers: { 'Content-Type': ContentTypeEnum.JSON },
@@ -253,8 +254,8 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           joinPrefix: true,
           // 是否返回原生响应头 比如：需要获取响应头时使用该属性
           isReturnNativeResponse: false,
-          // 需要对返回数据进行处理
-          isTransformResponse: true,
+          // 需要对返回数据进行处理， 设置为true则默认不返回数据 例 const data = await get_user(), data 为 undefined
+          isTransformResponse: true, 
           // post请求的时候添加参数到url
           joinParamsToUrl: false,
           // 格式化提交参数时间

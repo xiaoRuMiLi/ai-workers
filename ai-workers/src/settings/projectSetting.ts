@@ -52,8 +52,8 @@ const setting = {
     //显示图标
     showIcon: false,
   },
-  //菜单权限模式 FIXED 前端固定路由  BACK 动态获取
-  permissionMode: 'BACK',
+  //菜单权限模式 FIXED 前端固定路由根据permission生成  BACK 动态获取从adminMenu API 获取
+  permissionMode: 'FIXED',
   //是否开启路由动画
   isPageAnimate: true,
   //路由动画类型
