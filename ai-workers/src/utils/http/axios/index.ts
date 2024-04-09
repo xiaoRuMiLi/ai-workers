@@ -180,12 +180,15 @@ const transform: AxiosTransform = {
     const userStore = useUserStoreInstance();
     const token = userStore.getToken;
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
-      // jwt token
+      // sanctum token 如果配置了authenticationScheme，那么就会加到token前面
       (config as Recordable).headers.Authorization = options.authenticationScheme
         ? `${options.authenticationScheme} ${token}`
         : token;
+      console.log("requestInterceptors", config);
     }
+    
     return config;
+    
   },
 
   /**
@@ -237,7 +240,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
     deepMerge(
       {
         timeout: 10 * 1000,
-        // token， 如果withToken == true requestInterceptors函数中会重新赋值
+        // token， 如果withToken == true requestInterceptors函数中会重新赋值，这个属性会拼接到token字符前面
         authenticationScheme: '',
         // 接口前缀
         prefixUrl: urlPrefix,
