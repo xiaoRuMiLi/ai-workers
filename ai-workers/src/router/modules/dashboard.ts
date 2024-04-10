@@ -24,7 +24,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/dashboard',
     name: routeName,
-    redirect: '/dashboard/console',
+    redirect: '/dashboard/welcome',
     component: Layout,
     meta: {
         title: 'Dashboard',
@@ -38,8 +38,8 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [
       {
-        path: 'console',
-        name: `${routeName}_console`,
+        path: 'welcome',
+        name: `${routeName}_welcome`,
         meta: {
             title: '主控台',
             permissions: ['visitor'],
@@ -47,7 +47,7 @@ const routes: Array<RouteRecordRaw> = [
             //ignoreAuth: true,
             affix: true,
         },
-        component: () => import('@/views/dashboard/index.vue'),
+        component: () => import('@/views/dashboard/welcome.vue'),
       },
       // {
       //   path: 'monitor',
@@ -59,14 +59,14 @@ const routes: Array<RouteRecordRaw> = [
       //   component: () => import('@/views/dashboard/monitor/monitor.vue')
       // },
       {
-        path: 'workplace',
-        name: `${routeName}_workplace`,
+        path: 'index',
+        name: `${routeName}_index`,
         meta: {
             title: '工作台',
             keepAlive: true,
             permissions: ['visitor'],
         },
-        component: () => import('@/views/dashboard/index.vue'),
+        component: () => import('@/views/dashboard/welcome.vue'),
       },
     ],
   },

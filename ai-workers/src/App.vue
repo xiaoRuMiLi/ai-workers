@@ -8,7 +8,6 @@
     <NConfigProvider
         v-if="!isLock"
         :locale="zhCN"
-        :theme="darkTheme"
         :theme-overrides="themeOverrides"
         :date-locale="dateZhCN"
     >
@@ -21,17 +20,18 @@
 import { ref } from "vue";
 // import Layout from "@/layout/index.vue";
 import { NConfigProvider } from 'naive-ui'
-import { zhCN, dateZhCN, darkTheme, GlobalThemeOverrides} from 'naive-ui';
+import { zhCN, dateZhCN, GlobalThemeOverrides } from 'naive-ui';
 
 const isLock = ref(false);
 
 const themeOverrides: GlobalThemeOverrides = {
-    common: {
+    // 这里可以修改主题变量
+    /* common: {
       primaryColor: '#FF0000'
     },
     Button: {
       textColor: '#FF0000'
-    }
+    }*/
   }
 </script>
 

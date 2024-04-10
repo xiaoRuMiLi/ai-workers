@@ -111,7 +111,7 @@ export const useAsyncRouteStore = defineStore({
                 const { meta } = route;
                 const { permissions } = meta || {};
                 if (!permissions) return true;
-                return permissionsList.some((item) => permissions.includes(item)); // 检查路由是否在权限列表中
+                return permissionsList.some((item) => permissions.includes(item.value)); // 检查路由是否在权限列表中
             };
             const { getPermissionMode } = useProjectSetting();
             // 如果是权限模式为BACK， 那么访问API adminMenu 根据返回生成路由树，
