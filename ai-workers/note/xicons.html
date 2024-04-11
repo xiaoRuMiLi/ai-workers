@@ -1,0 +1,51 @@
+<!--
+ * @Description: 
+ * @User: King <303219462@qq.com>
+ * @Date: 2024-04-11 19:46:28
+-->
+<!DOCTYPE html>
+    <head>
+        <title>
+            xicon
+        </title>
+    </head>
+    <body>
+        <h3>
+            使用方法，
+        </h3>
+        <pre>
+            1. 进入官方网站， https://xicons.org/#/zh-CN 
+
+            2. 我这里下载的是 npm i -D @vicons/antd antd组
+
+            3. 选中你要使用的图片，停留在图标上选择复制名称，
+
+            4. 项目中引用，
+                import {
+                    SettingOutlined, // 这些就是复制的名称
+                } from '@vicons/antd';
+
+            5. 使用 
+
+                <template #trigger>
+                    <n-icon size="18">
+                        // is 属性填入名称
+                        <component :is="SettingOutlined" @click="toggleFullScreen" />
+                    </n-icon>
+                </template>
+
+                ------or----------
+
+
+                // 你可以直接使用渲染为 SVG 的组件
+                // 或者把它包裹在 @ricons/utils 提供的 Icon 组件中
+                import { Icon } from '@ricons/utils'
+                <template>
+                    <Icon>
+                        // 当做组件使用
+                        <SettingOutlined/>
+                    </Icon>
+                </template>
+        </pre>
+    </body>
+</html>

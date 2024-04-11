@@ -4,54 +4,40 @@
         <!-- 头部区域 -->
         <header v-if="!hiddenHead" class="layout-header">  
             <div class="layout-header-right">
-                <div
-                  class="layout-header-trigger layout-header-trigger-min"
-                  v-for="item in iconList"
-                  :key="item.icon.name"
-                >
-                  <n-tooltip placement="bottom">
-                    <template #trigger>
-                      <n-icon size="18">
-                        <component :is="item.icon" v-on="item.eventObject || {}" />
-                      </n-icon>
-                    </template>
-                    <span>{{ item.tips }}</span>
-                  </n-tooltip>
-                </div>
                 <!--切换全屏-->
                 <div class="layout-header-trigger layout-header-trigger-min">
-                  <n-tooltip placement="bottom">
-                    <template #trigger>
-                      <n-icon size="18">
-                        <component :is="fullscreenIcon" @click="toggleFullScreen" />
-                      </n-icon>
-                    </template>
-                    <span>全屏</span>
-                  </n-tooltip>
+                    <n-tooltip placement="bottom">
+                        <template #trigger>
+                            <n-icon size="18">
+                                <component :is="fullscreenIcon" @click="toggleFullScreen" />
+                            </n-icon>
+                        </template>
+                        <span>全屏</span>
+                    </n-tooltip>
                 </div>
                 <!-- 个人中心 -->
                 <div class="layout-header-trigger layout-header-trigger-min">
-                  <n-dropdown trigger="hover" @select="avatarSelect" :options="avatarOptions">
-                    <div class="avatar">
-                      <n-avatar round>
-                         username 
-                        <template #icon>
-                          <UserOutlined />
-                        </template>
-                      </n-avatar>
-                    </div>
-                  </n-dropdown>
+                    <n-dropdown trigger="hover" @select="avatarSelect" :options="avatarOptions">
+                        <div class="avatar">
+                            <n-avatar round>
+                                {{username}} 
+                                <template #icon>
+                                    <UserOutlined />
+                                </template>
+                            </n-avatar>
+                        </div>
+                    </n-dropdown>
                 </div>
                 <!--设置-->
                 <div class="layout-header-trigger layout-header-trigger-min" @click="openSetting">
-                  <n-tooltip placement="bottom-end">
-                    <template #trigger>
-                      <n-icon size="18" style="font-weight: bold">
-                        <SettingOutlined />
-                      </n-icon>
-                    </template>
-                    <span>项目配置</span>
-                  </n-tooltip>
+                    <n-tooltip placement="bottom-end">
+                        <template #trigger>
+                            <n-icon size="18" style="font-weight: bold">
+                                <SettingOutlined />
+                            </n-icon>
+                        </template>
+                        <span>项目配置</span>
+                    </n-tooltip>
                 </div>
               </div>
         </header>
@@ -74,10 +60,10 @@
 </template>
   
 <script lang="ts">
-  import { defineComponent, reactive, toRefs, ref, computed, unref } from 'vue';
+  import { defineComponent, reactive, toRefs,  } from 'vue';
   import { NTooltip, NIcon, NDropdown, NAvatar } from 'naive-ui';
   import { useUserStoreInstance } from '@/store/modules/user';
-  import { useProjectSettingStoreInstance } from "@/store/modules/projectSetting";
+  import { FullscreenOutlined, FullscreenExitOutlined, UserOutlined, SettingOutlined } from '@vicons/antd';
   
     
     /**
@@ -90,7 +76,9 @@
             NIcon,
             NTooltip,
             NDropdown,
-            NAvatar
+            NAvatar,
+            UserOutlined,
+            SettingOutlined,
         },
         props: {
             hiddenHead: {
@@ -120,28 +108,28 @@
         
         },
         setup(props) {
-            const { getNavMode, getNavTheme, getHeaderSetting, getMenuSetting, getCrumbsSetting } =
-            useProjectSettingStoreInstance();
             const userStore = useUserStoreInstance();
             const { name } = userStore?.info || {};
             const state = reactive({
                 username: name || '',
-                fullscreenIcon: 'FullscreenOutlined',
-                navMode: getNavMode,
-                navTheme: getNavTheme,
-                headerSetting: getHeaderSetting,
-                crumbsSetting: getCrumbsSetting,
+                fullscreenIcon: FullscreenOutlined,
             });
             /**
              * setup 函数是 Composition API 的入口
              * 在这里可以使用响应式数据、计算属性、方法等
              */
             const { customProp } = props;
-            
-            const iconList = ref(
-                [
-                {tips: "tips", icon: {name: "name"}, eventObject: () => {}}
-            ]);
+
+            const avatarOptions = [
+                {
+                    label: '个人设置',
+                    key: 1,
+                },
+                {
+                    label: '退出登录',
+                    key: 2,
+                },
+            ];
         
             /**
              * 一个示例方法
@@ -149,11 +137,41 @@
             const exampleMethod = () => {
                 console.log('This is an example method:', customProp);
             };
+
+            // 切换全屏图标
+            const toggleFullscreenIcon = () =>
+                (state.fullscreenIcon =
+                document.fullscreenElement !== null ? FullscreenExitOutlined : FullscreenOutlined);
+
+            // 监听全屏切换事件
+            document.addEventListener('fullscreenchange', toggleFullscreenIcon);
+
+            // 全屏切换
+            const toggleFullScreen = () => {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    }
+                }
+            };
+
+            const avatarSelect = () => {
+                // 图标选择方法
+            }
+
+            const openSetting = () => {
+                // 打开设置
+            }
         
             // 返回给模板使用的所有响应式数据和方法
             return {
                 exampleMethod,
-                iconList,
+                toggleFullScreen,
+                avatarOptions,
+                avatarSelect,
+                openSetting,
                 ...toRefs(state)
                 
             };
@@ -182,126 +200,128 @@
         z-index: 11;
     
         &-left {
-          display: flex;
-          align-items: center;
-    
-          .logo {
             display: flex;
             align-items: center;
-            justify-content: center;
-            height: 64px;
-            line-height: 64px;
-            overflow: hidden;
-            white-space: nowrap;
-            padding-left: 10px;
-    
-            img {
-              width: auto;
-              height: 32px;
-              margin-right: 10px;
+        
+            .logo {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 64px;
+                line-height: 64px;
+                overflow: hidden;
+                white-space: nowrap;
+                padding-left: 10px;
+        
+                img {
+                width: auto;
+                height: 32px;
+                margin-right: 10px;
+                }
+        
+                .title {
+                margin-bottom: 0;
+                }
             }
-    
-            .title {
-              margin-bottom: 0;
+        
+            ::v-deep(.ant-breadcrumb span:last-child .link-text) {
+                color: #515a6e;
             }
-          }
-    
-          ::v-deep(.ant-breadcrumb span:last-child .link-text) {
-            color: #515a6e;
-          }
-    
-          .n-breadcrumb {
-            display: inline-block;
-          }
-    
-          &-menu {
-            color: var(--text-color);
-          }
+        
+            .n-breadcrumb {
+                display: inline-block;
+            }
+        
+            &-menu {
+                color: var(--text-color);
+            }
         }
     
         &-right {
-          display: flex;
-          align-items: center;
-          margin-right: 20px;
-    
-          .avatar {
+            position: absolute;
+            right: 0;
             display: flex;
             align-items: center;
-            height: 64px;
-          }
-    
-          > * {
-            cursor: pointer;
-          }
+            margin-right: 20px;
+        
+            .avatar {
+                display: flex;
+                align-items: center;
+                height: 64px;
+            }
+        
+            > * {
+                cursor: pointer;
+            }
         }
     
-        &-trigger {
-          display: inline-block;
-          width: 64px;
-          height: 64px;
-          text-align: center;
-          cursor: pointer;
-          transition: all 0.2s ease-in-out;
-    
-          .n-icon {
-            display: flex;
-            align-items: center;
-            height: 64px;
-            line-height: 64px;
-          }
-    
-          &:hover {
-            background: hsla(0, 0%, 100%, 0.08);
-          }
-    
-          .anticon {
-            font-size: 16px;
+            &-trigger {
+                display: inline-block;
+                width: 64px;
+                height: 64px;
+                text-align: center;
+                cursor: pointer;
+                transition: all 0.2s ease-in-out;
+            
+            .n-icon {
+                display: flex;
+                align-items: center;
+                height: 64px;
+                line-height: 64px;
+            }
+        
+            &:hover {
+                background: hsla(0, 0%, 100%, 0.08);
+            }
+        
+            .anticon {
+                font-size: 16px;
+                color: #515a6e;
+            }
+            }
+        
+            &-trigger-min {
+                width: auto;
+                padding: 0 12px;
+            }
+        }
+        
+        .layout-header-light {
+            background: #fff;
             color: #515a6e;
-          }
-        }
-    
-        &-trigger-min {
-          width: auto;
-          padding: 0 12px;
-        }
-      }
-    
-      .layout-header-light {
-        background: #fff;
-        color: #515a6e;
-    
-        .n-icon {
-          color: #515a6e;
-        }
-    
-        .layout-header-left {
-          ::v-deep(.n-breadcrumb .n-breadcrumb-item:last-child .n-breadcrumb-item__link) {
+        
+            .n-icon {
             color: #515a6e;
-          }
+            }
+        
+            .layout-header-left {
+            ::v-deep(.n-breadcrumb .n-breadcrumb-item:last-child .n-breadcrumb-item__link) {
+                color: #515a6e;
+            }
+            }
+        
+            .layout-header-trigger {
+            &:hover {
+                background: #f8f8f9;
+            }
+            }
         }
-    
-        .layout-header-trigger {
-          &:hover {
-            background: #f8f8f9;
-          }
+        
+        .layout-header-fix {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 200px;
+            z-index: 11;
         }
-      }
-    
-      .layout-header-fix {
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: 200px;
-        z-index: 11;
-      }
-    
-      //::v-deep(.menu-router-link) {
-      //  color: #515a6e;
-      //
-      //  &:hover {
-      //    color: #1890ff;
-      //  }
-      //}
+        
+        //::v-deep(.menu-router-link) {
+        //  color: #515a6e;
+        //
+        //  &:hover {
+        //    color: #1890ff;
+        //  }
+        //}
     .layout-footer {
         /* 底部样式 */
         padding: 1rem;
