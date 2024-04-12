@@ -59,14 +59,14 @@ const routes: Array<RouteRecordRaw> = [
       //   component: () => import('@/views/dashboard/monitor/monitor.vue')
       // },
       {
-        path: 'index',
-        name: `${routeName}_index`,
+        path: 'home',
+        name: `${routeName}_home`,
         meta: {
             title: '工作台',
             keepAlive: true,
             permissions: ['visitor'],
         },
-        component: () => import('@/views/dashboard/welcome.vue'),
+        component: () => import('@/views/dashboard/home.vue'),
       },
     ],
   },
