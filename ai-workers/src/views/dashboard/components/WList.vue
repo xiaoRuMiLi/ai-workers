@@ -7,14 +7,16 @@
     <div class="worker-list-wrapper">
         <div class="worker-list-title"> {{ title }}</div>
         <div class="worker-list-content">
-            <slot v-for="item, key in datas" :key="key">
-                <worker-item
-                :id="item.id"
-                :name="item.name"
-                :description="item.description"
-                :key-point="item.keyPoint"
-                :icon="item.icon"
-                />
+            <slot  v-for="item, key in datas" :key="key">
+                <div class="list-item">
+                    <worker-item
+                    :id="item.id"
+                    :name="item.name"
+                    :description="item.description"
+                    :key-point="item.keyPoint"
+                    :icon="item.icon"
+                    />
+                </div>
             </slot>
         </div>
     </div>"
@@ -29,3 +31,27 @@
     }>();
    
 </script>
+<style scoped lang="less">
+@import "@/styles/var.less";
+.worker-list-wrapper {
+    
+}
+.worker-list-title {
+    font-size: @font-size-lg;
+    padding: @padding-md;
+}
+.worker-list-content {
+    background: @background-color-soft;
+    display: flex;
+    flex-wrap: wrap;
+    padding: @padding-md;
+    justify-content: space-between;
+    gap: 10px;
+}
+.list-item {
+    width: 300px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    
+}
+</style>

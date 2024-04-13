@@ -26,12 +26,12 @@
                     </template>
                     <template #default>
                         <div class="worker-item-content">
-                            {{ description }}
+                            {{ keyPoint }}
                         </div>
                     </template>
                     <template #footer>
-                        <div class="worker-item-foot">
-                            {{ keyPoint }}
+                        <div class="worker-item-buttons">
+
                         </div>
                     </template>
                 </n-card>
@@ -54,7 +54,7 @@
     import { NIcon } from "naive-ui";
     const IconComponent = new Map<string, Component>();
     IconComponent.set(SettingOutlined["name"], SettingOutlined);
-    IconComponent.set('defaultIcon', MehTwotone);
+    IconComponent.set('default', MehTwotone);
     defineProps<BaseWorker>();
 
     const handleClick = (id: number) => {
@@ -66,11 +66,10 @@
 .worker-item {
     @line-hight: @font-size-sm * 1.5;
     @max-height: @line-hight * 3;
-    width: 200px;
     &-content {
         display: -webkit-box; /*将元素显示为一个块级盒子。*/
         -webkit-box-orient: vertical; /*设置盒子的布局方向为垂直。*/
-        -webkit-line-clamp: 2; /**限制在一个块元素显示的文本的行数为 3 行。*/
+        -webkit-line-clamp: 1; /**限制在一个块元素显示的文本的行数为 3 行。*/
         overflow: hidden; /* 隐藏溢出容器的文本。*/
         text-overflow: ellipsis; /*显示溢出的文本末尾的省略号。*/
         line-height: @line-hight; /*设置行高，根据你的设计需求调整这个值。*/
