@@ -1,8 +1,4 @@
-<!--
- * @Description: 
- * @User: King <303219462@qq.com>
- * @Date: 2024-04-11 22:10:24
--->
+
 <!--
  * @Description: 
  * @User: King <303219462@qq.com>
@@ -18,8 +14,8 @@
                 >
                     <template #header>
                         <div class="worker-item-head">
-                            <n-icon size="18">
-                                <component :is="IconComponent[icon]"/>
+                            <n-icon size="25" color="#6089ef">
+                                <component :is="iconComponents.get(icon)"/>
                             </n-icon>
                             {{ name }}
                         </div>
@@ -47,14 +43,11 @@
 </template>
 <script lang="ts" setup>
     import { defineProps  } from 'vue';
-    import type { Component } from 'vue'
     import type { BaseWorker } from "/#/worker";
-    import { SettingOutlined, MehTwotone } from '@vicons/antd';
     import { NCard, NPopover } from "naive-ui";
     import { NIcon } from "naive-ui";
-    const IconComponent = new Map<string, Component>();
-    IconComponent.set(SettingOutlined["name"], SettingOutlined);
-    IconComponent.set('default', MehTwotone);
+    import iconComponents from "@/icon-components/worker-icon";
+    
     defineProps<BaseWorker>();
 
     const handleClick = (id: number) => {
@@ -64,6 +57,12 @@
 </script>
 <style scoped lang="less">
 .worker-item {
+    .worker-item-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
     @line-hight: @font-size-sm * 1.5;
     @max-height: @line-hight * 3;
     &-content {
