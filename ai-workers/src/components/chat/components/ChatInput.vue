@@ -1,3 +1,8 @@
+<!--
+ * @Description: 
+ * @User: King <303219462@qq.com>
+ * @Date: 2024-04-15 21:01:04
+-->
 <template>
     <div class="chat-input-wrapper">
         <div class="chat-input-left">
@@ -16,16 +21,10 @@
             />
             
             <div class="chat-input-btn">
-                <NButton
-                tertiary
-                size="tiny">
-                <template #icon>
-                    <NIcon size="25" :bordered="false" color="#6089ef">
-                        <component :is="SendOutlined" />
-                    </NIcon>
-                </template>
-                </NButton>
-                
+                 
+                <NIcon size="20">  
+                    <component :is="SendOutlined" />
+                </NIcon>  
 
             </div>
         </div>
@@ -35,7 +34,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { NInput, NButton, NIcon } from "naive-ui";
+import { NInput, NIcon } from "naive-ui";
 import { defineProps, computed, defineEmits, WritableComputedRef } from "vue";
 import { SendOutlined } from "@vicons/antd";
 
@@ -63,6 +62,7 @@ const value: WritableComputedRef<string> = computed({
 </script>
 
 <style scoped lang="less">
+@import '@/styles/var.less';
 .chat-input-wrapper {
     width: 100%;
     position: relative;
@@ -77,6 +77,8 @@ const value: WritableComputedRef<string> = computed({
         .chat-input-btn {
             display: flex;
             align-items: center;
+            padding-left: @padding-md;
+
         }
     }
 }

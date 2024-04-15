@@ -41,6 +41,9 @@
                 </div>
               </div>
         </header>
+        <div class="head-white-space">
+           
+        </div>
         <section class="layout-middle">
             <!-- 侧边栏区域 -->
             <aside v-if="!hiddenAside" class="layout-sidebar">
@@ -55,7 +58,12 @@
             </main>
         </section>
         <!-- 底部区域 -->
-        <footer v-if="!hidddenFoot" class="layout-footer">Footer Area</footer>
+        <footer v-if="!hidddenFoot" class="layout-footer"> 
+            
+        </footer>
+        <div class="chat-container">
+            <chat></chat>
+        </div>
     </div>
 </template>
   
@@ -64,6 +72,7 @@
   import { NTooltip, NIcon, NDropdown, NAvatar } from 'naive-ui';
   import { useUserStoreInstance } from '@/store/modules/user';
   import { FullscreenOutlined, FullscreenExitOutlined, UserOutlined, SettingOutlined } from '@vicons/antd';
+  import Chat from "@/components/chat/index.vue";
   
     
     /**
@@ -79,6 +88,7 @@
             NAvatar,
             UserOutlined,
             SettingOutlined,
+            Chat,
         },
         props: {
             hiddenHead: {
@@ -91,7 +101,7 @@
             },
             hidddenFoot: {
                 type: Boolean,
-                default: true,
+                default: false,
             },
             customProp: {
                 type: Object,
@@ -180,14 +190,16 @@
 </script>
   
 <style lang="less" scoped>
+@import "@/styles/var.less";
     /* 为布局组件添加一些基本的样式 */
     .layout-container {
         flex-direction: column;
         width: 100vw;
-        height: 100vh;
         display: flex;
     }
-    
+    .head-white-space {
+        height: 64px;
+    }
     .layout-header {
         display: flex;
         justify-content: space-between;
@@ -198,6 +210,9 @@
         transition: all 0.2s ease-in-out;
         width: 100%;
         z-index: 11;
+        position: fixed;
+        background: @background-color-soft;
+        top: 0;
     
         &-left {
             display: flex;
@@ -325,11 +340,11 @@
     .layout-footer {
         /* 底部样式 */
         padding: 1rem;
-        background-color: #f0f0f0;
         text-align: center;
         bottom: 0;
     }
     .layout-middle {
+        top: 64px;
         flex-grow: 1;
         display: flex;
         

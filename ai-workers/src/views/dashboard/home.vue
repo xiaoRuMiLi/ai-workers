@@ -11,16 +11,13 @@
             title="推荐"
             />
         </div>
-        <div class="chat-container">
-            <Chat />
-        </div>
+        
     </div>
 </template>
 <script lang="ts" setup>
     import { ref, Ref } from "vue";
     import { BaseWorker } from "/#/worker";
     import  WorkerList  from "./components/WList.vue";
-    import Chat from "@/components/chat/index.vue"
 
     const exampleList: Ref<BaseWorker[]> = ref([
         {

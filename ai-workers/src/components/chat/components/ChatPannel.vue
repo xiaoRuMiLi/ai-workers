@@ -104,6 +104,12 @@ const expressionClass = computed(() => {
 </script>
   
 <style scoped lang="less">
+@import "@/styles/var.less";
+    .chat-pannel-wrapper {
+        padding: @padding-md;
+        box-sizing: border-box;
+        align-items: flex-end;
+    }
     .chat-image {
         width: 100px;
         height: 100px;
@@ -122,6 +128,7 @@ const expressionClass = computed(() => {
     }
     .chat-pannel-wrapper {
         display: flex;
+        justify-content: flex-start;
     }
     
     .chat-image-happy {
@@ -143,7 +150,7 @@ const expressionClass = computed(() => {
     /* ... 为其他表情添加样式 */
 
     .chat-bubble {
-        background-color: #e6e6e6;
+        background-color: @background-color-soft;
         border-radius: 20px;
         padding: 10px 15px;
         max-width: 70%;
@@ -165,7 +172,7 @@ const expressionClass = computed(() => {
         left: -8px;
         border-style: solid;
         border-width: 8px 8px 8px 0;
-        border-color: transparent #e6e6e6 transparent transparent;
+        border-color: transparent #f9f9f9 transparent transparent;
         transform: translateY(-50%);
     }
       
@@ -177,7 +184,7 @@ const expressionClass = computed(() => {
         right: -8px;
         border-style: solid;
         border-width: 8px 0 8px 8px;
-        border-color: transparent transparent transparent #e6e6e6;
+        border-color: transparent transparent transparent #f9f9f9;
         transform: translateY(-50%);
     }
 </style>
