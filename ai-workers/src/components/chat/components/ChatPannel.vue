@@ -5,29 +5,36 @@
 -->
 <template>
     <div class="chat-pannel-wrapper">
-        <div class="chat-image" :class="expressionClass">
+        <div class="chat-image-container" :class="expressionClass">
             <!-- 这里放置AI的头像或者动图 -->
             <!-- 这里可以放置动图的图片或其他内容 -->
-            <img :src="expressionImage" />
+            <img class="chat-image" :src="expressionImage" alt="图像不见了"/>
             <div>  </div>
 
         </div>
-        <div class="chat-pannel-answer">
+        <div v-if="answer" class="chat-pannel-answer">
             <!-- 这里是一个AI回答内容的聊天气泡 -->
             <div class="chat-bubble" :style="bubbleStyle" :class="bubbleDirection == 'left' ? 'chat-bubble-to-right' : 'chat-bubble-to-left'">
                 <div class="chat-bubble-content">
                     <!-- 使用 v-html 指令渲染带有潜在 HTML 标签的内容 -->
                     <!--<div v-html="value"></div>-->
-                    {{ value }}
+                    {{ answer }}
                 </div>
             </div>
+            
         </div>
+    </div>
+    <div class="chat-pannel-input">
+        <ChatInput
+            v-model= inputValue
+        />
     </div>
 </template>
  
 <script lang="ts" setup>
-import { defineProps, computed, onMounted, ref } from 'vue';
-
+import { defineProps, computed, onMounted, defineEmits } from 'vue';
+import happyImage from "@static/images/e95d925dd71c38a1e4e3c249566f01b4.gif";
+import ChatInput from "./ChatInput.vue";
   
 interface ExpressionType {
     happy: string;
@@ -42,11 +49,13 @@ type Props = {
     // 气泡框class控制样式
     bubbleStyle: {[key:string]: string} | null,
     // 内容
-    value: string,
+    answer: string,
+    modelValue: string,
     bubbleDirection: "left"|"right",
+   
 };
 
-const avatar = ref(" ");
+
 const props = withDefaults(defineProps<Props>(), {
     bubbleClass: "bubble-default",
     expression: "happy",
@@ -54,25 +63,36 @@ const props = withDefaults(defineProps<Props>(), {
     bubbleStyle: null,
 });
 
+const emits = defineEmits<{
+   (e: "update:modelValue", value:string): void
+}>();
+
+const inputValue = computed({
+    set: (value: string) => {
+        emits("update:modelValue", value);
+    },
+    get: () => {
+        return props.modelValue;
+    }
+});
+
 const expressionImage = computed( () => {
 
     const expressions: ExpressionType = {
-        happy: 'images/e95d925dd71c38a1e4e3c249566f01b4.gif',
+        happy: happyImage,
         sad: 'path/to/sad.png',
         angry: 'path/to/angry.png',
         // ... 根据需要添加更多路径
     };
-    const img =  expressions[props.expression] || 'images/e95d925dd71c38a1e4e3c249566f01b4.gif';
+    const img =  expressions[props.expression] || happyImage;
 
     // 动态加载图片
-    return "/public/static/images/e95d925dd71c38a1e4e3c249566f01b4.gif";
+    return img;
     
 })
 
 onMounted(async () => {
-   const image = await import(`@static/images/e95d925dd71c38a1e4e3c249566f01b4.gif`);
-   console.log(image);
-   avatar.value = image;
+   
 })
 
 const expressionClass = computed(() => {
@@ -84,6 +104,16 @@ const expressionClass = computed(() => {
 </script>
   
 <style scoped lang="less">
+    .chat-image {
+        width: 100px;
+        height: 100px;
+
+    }
+    .chat-pannel-input {
+        display: flex;
+        justify-content: center;
+    }
+
     .ai-head {
       width: 100px;
       height: 100px;
@@ -104,6 +134,10 @@ const expressionClass = computed(() => {
     
     .chat-image-angry {
       /* 生气的表情样式 */
+    }
+    .chat-pannel-answer {
+       display: flex;
+       align-items: center;
     }
     
     /* ... 为其他表情添加样式 */
