@@ -9,15 +9,16 @@
  * @Date: 2024-04-14 19:32:30
 -->
 <template>
-    <div class="chat-wrapper">
-        <div class="mask">
-        </div>
+    <Transition name="fade">
+        <div v-show="show" class="chat-wrapper">
+            <div v-if="showHistory" class="mask">
+            </div>
             <div class="chat-container">
                 <div class="chat-history">
                     <!-- 这里存放以往来聊天内容-->
                     <ChatHistoryContent
                     :datas="historyMessages"
-                    v-model:show = "showHistory"
+                    v-model:show="showHistory"
                     />
                 </div>
                 <div class="chat-pannel">
@@ -25,23 +26,36 @@
                     <ChatPannel
                     expression="happy"
                     v-model="inputValue"
-                    answer="AI客服机器人，很高兴为你服务。"
-                    @on-send = "onSend"
+                    answer="AI客服机器人，很高兴为你服务。
+                    注意事项"
+                    @on-send="onSend"
+                    @on-show="showChatPannel"
                     />
                 </div>
                 <div class="chat-input">
                     <!--聊天输入框 -->
                 </div>
             </div>
+            
+        </div>
+    </Transition>
+    <div v-if="!show" class="avatar-container" @click="show = true"> 
+        <!--边角图标 -->
+        <NImage
+        :height="50"
+        :src="happyImage"
+        />
         
-    </div>"
+    </div>
 </template>
 <script lang="ts" setup>
 import ChatHistoryContent from "./components/ChatHistoryContent.vue";
 import ChatPannel from "./components/ChatPannel.vue";
 import { ref, defineProps  } from "vue";
 import AiMessage from "/#/aiMessage";
-import apiResponse from "/#/apiResponse"
+import type ApiResponse from "/#/apiResponse";
+import happyImage from "@static/images/e95d925dd71c38a1e4e3c249566f01b4.gif";
+import { NImage } from "naive-ui"
 const inputValue = ref("预先输入");
 const showHistory = ref(true);
 const historyMessages: AiMessage[] = [
@@ -56,19 +70,32 @@ const historyMessages: AiMessage[] = [
 ];
 
 export interface Props {
-    onSend: (message: string) => Promise<apiResponse>
+    onSend: (message: string) => Promise<ApiResponse>
 }
 
 const props = defineProps<Props>();
 
 const onSend = async (message: string) => {
-    const data = await props.onSend(message);
+    try {
+        const data = await props.onSend(message);
 
+    } catch (err)
+    {
+        console.log(err);
+    }
+    
+}
+// 控制整个聊天窗口的隐藏
+const show = ref(true);
+// 显示或者隐藏聊天面板
+const showChatPannel = (value: boolean) => {
+    if(!value) show.value = value;
 }
 
 </script>
 
 <style scoped lang="less">
+@import '@/styles/index.less';
 .wrapper {
     width: 100%;
     display: flex;
@@ -90,6 +117,13 @@ const onSend = async (message: string) => {
     flex-direction: column;
     justify-content: flex-end;
 }
+.chat-pannel {
+    background-color: white;
+    padding: @padding-md;
+    border-radius: @border-radius-md;
+    margin-bottom: 50px;
+    box-sizing: border-box;
+}
 
 .chat-container::-webkit-scrollbar {
   display: none;
@@ -105,8 +139,15 @@ const onSend = async (message: string) => {
 .chat-history {
     display: flex;
     justify-content: center;
+    width: 100%;
+    overflow-y: scroll;
 }
-.chat-pannel {
-     
+.chat-history::-webkit-scrollbar {
+    display: none;
+}
+.avatar-container {
+    position: fixed;
+    bottom: 0;
+    left: -10px;
 }
 </style>

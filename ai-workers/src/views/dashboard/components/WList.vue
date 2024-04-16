@@ -45,7 +45,7 @@
     display: flex;
     flex-wrap: wrap;
     padding: @padding-md;
-    justify-content: space-between;
+    justify-content: space-around;
     gap: 10px;
 }
 .list-item {

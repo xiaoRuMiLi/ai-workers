@@ -4,8 +4,12 @@
  * @Date: 2024-04-14 19:40:42
 -->
 <template>
+
     <div class="chat-pannel-wrapper">
         <div class="chat-image-container" :class="expressionClass">
+            <NIcon class="close-icon" size="20" @click="handleHidden(false)">
+                <component :is="CloseCircleOutlined"/>
+            </NIcon>
             <!-- 这里放置AI的头像或者动图 -->
             <!-- 这里可以放置动图的图片或其他内容 -->
             <img class="chat-image" :src="expressionImage" alt="图像不见了"/>
@@ -33,9 +37,11 @@
 </template>
  
 <script lang="ts" setup>
-import { defineProps, computed, onMounted, defineEmits } from 'vue';
+import { defineProps, computed, onMounted, defineEmits, ref } from 'vue';
 import happyImage from "@static/images/e95d925dd71c38a1e4e3c249566f01b4.gif";
 import ChatInput from "./ChatInput.vue";
+import { CloseCircleOutlined } from "@vicons/antd";
+import { NIcon } from "naive-ui";
   
 interface ExpressionType {
     happy: string;
@@ -56,6 +62,8 @@ type Props = {
    
 };
 
+// 隐藏
+const showPannel = ref(true);
 
 const props = withDefaults(defineProps<Props>(), {
     bubbleClass: "bubble-default",
@@ -66,8 +74,14 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emits = defineEmits<{
    (e: "update:modelValue", value:string): void,
-   (e: "onSend", message: string)
+   (e: "onSend", message: string): void,
+   (e: "onShow", showPannel: boolean): void,
 }>();
+
+const handleHidden = (value: boolean) => {
+    showPannel.value = value;
+    emits("onShow", value);
+}
 
 const inputValue = computed({
     set: (value: string) => {
@@ -77,11 +91,13 @@ const inputValue = computed({
         return props.modelValue;
     }
 });
+
 // 发送消息
 const onSend = (message: string) => {
     emits("onSend", message);
 }
 
+//表情图片组
 const expressionImage = computed( () => {
 
     const expressions: ExpressionType = {
@@ -115,8 +131,14 @@ const expressionClass = computed(() => {
         box-sizing: border-box;
         align-items: flex-end;
     }
+
+    .close-icon {
+        position: absolute;
+        left: 0px;
+        top: -20px;
+    }
     .chat-image-container {
-        
+        position: relative;
     }
     .chat-image {
         width: 50px;

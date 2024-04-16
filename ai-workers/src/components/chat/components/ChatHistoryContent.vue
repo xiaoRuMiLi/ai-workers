@@ -5,11 +5,11 @@
 -->
 <template>
     <div class="chat-history" @click="showMsg = !showMsg">
-        <NIcon size="20">
+        <NIcon size="20" class="close-icon">
             <component :is="hideFont"/>
         </NIcon>
         <transition name="collapse">
-            <div class="message-container" v-show="show">
+            <div class="message-container" v-show="showMsg">
                 <div v-for="item,key in datas" :key="key" class="chat-history-message" :class="item.role == 0 ? 'message-right' : 'message-left'">
                     <div class="message">
                         <div v-if="item.role != 0" class="assitant-avatar">
@@ -86,6 +86,13 @@
 }
 .message-container {
     width: 100%;
+}
+
+.close-icon {
+    padding: @padding-base;
+    border-radius: 50%;
+    background-color: @background-color-soft;
+    width: auto;
 }
 .chat-history {
     padding: @padding-md;
