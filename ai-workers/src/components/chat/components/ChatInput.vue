@@ -20,9 +20,9 @@
             round
             />
             
-            <div class="chat-input-btn">
+            <div class="chat-input-btn" @click="onSend">
                  
-                <NIcon size="20">  
+                <NIcon class="icon-send" size="20">  
                     <component :is="SendOutlined" />
                 </NIcon>  
 
@@ -45,7 +45,7 @@ const props = defineProps<Props>();
 
 const emits = defineEmits<{
     (e: "update:modelValue", value: string): void,
-    (e: "submit", value: string): void,
+    (e: "onSend", value: string): void,
 }>();
 
 const value: WritableComputedRef<string> = computed({
@@ -58,7 +58,10 @@ const value: WritableComputedRef<string> = computed({
     }
 })
 
-
+const onSend = () =>
+{
+    emits("onSend", value.value);
+}
 </script>
 
 <style scoped lang="less">
@@ -80,6 +83,9 @@ const value: WritableComputedRef<string> = computed({
             padding-left: @padding-md;
 
         }
+    }
+    .icon-send:hover {
+        color: @primaryColorHover;
     }
 }
 </style>"

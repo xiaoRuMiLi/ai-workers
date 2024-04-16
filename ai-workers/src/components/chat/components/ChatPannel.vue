@@ -27,6 +27,7 @@
     <div class="chat-pannel-input">
         <ChatInput
             v-model= inputValue
+            @on-send="onSend"
         />
     </div>
 </template>
@@ -64,7 +65,8 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emits = defineEmits<{
-   (e: "update:modelValue", value:string): void
+   (e: "update:modelValue", value:string): void,
+   (e: "onSend", message: string)
 }>();
 
 const inputValue = computed({
@@ -75,6 +77,10 @@ const inputValue = computed({
         return props.modelValue;
     }
 });
+// 发送消息
+const onSend = (message: string) => {
+    emits("onSend", message);
+}
 
 const expressionImage = computed( () => {
 
@@ -106,18 +112,21 @@ const expressionClass = computed(() => {
 <style scoped lang="less">
 @import "@/styles/var.less";
     .chat-pannel-wrapper {
-        padding: @padding-md;
         box-sizing: border-box;
         align-items: flex-end;
     }
+    .chat-image-container {
+        
+    }
     .chat-image {
-        width: 100px;
-        height: 100px;
+        width: 50px;
+        height: 50px;
 
     }
     .chat-pannel-input {
         display: flex;
         justify-content: center;
+        margin: @padding-md 0;
     }
 
     .ai-head {
@@ -153,15 +162,15 @@ const expressionClass = computed(() => {
         background-color: @background-color-soft;
         border-radius: 20px;
         padding: 10px 15px;
-        max-width: 70%;
         position: relative;
         display: inline-block;
     }
       
     .chat-bubble-content {
         /* 你可以在这里添加更多的样式来美化聊天气泡内容 */
-        font-size: 14px;
+        font-size: @font-size-sm;
         color: #333;
+        margin-bottom: @padding-sm;
     }
       
       /* 添加样式以使右侧气泡的角指向左边 */
