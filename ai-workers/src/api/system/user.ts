@@ -44,6 +44,7 @@ export function login(params) {
       params,
     },
     {
+      // 是否需要转换输出数据
       isTransformResponse: false,
     }
   );
@@ -60,6 +61,21 @@ export function changePassword(params, uid) {
       params,
     },
     {
+      isTransformResponse: false,
+    }
+  );
+}
+
+export function register(params)
+{
+  return http.request<BasicResponseModel>(
+    {
+      url: '/login_by_auth',
+      method: 'POST',
+      params,
+    },
+    {
+      // 是否需要转换输出数据
       isTransformResponse: false,
     }
   );

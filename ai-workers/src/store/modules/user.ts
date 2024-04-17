@@ -8,7 +8,7 @@ import { store } from '@/store';
 import { ACCESS_TOKEN, CURRENT_USER, IS_SCREENLOCKED } from '@/store/mutation-types';
 import { ResultEnum } from '@/enums/httpEnum';
 
-import { getUserInfo as getUserInfoApi, login } from '@/api/system/user';
+import { getUserInfo as getUserInfoApi, login, register} from '@/api/system/user';
 import { localCache } from '@/utils/Storage';
 
 export type UserInfoType = {
@@ -77,6 +77,23 @@ export const useUserStore = defineStore({
           localCache.set(CURRENT_USER, data, ex);
           localCache.set(IS_SCREENLOCKED, false);
           this.setToken(data.token);
+          this.setUserInfo(data);
+        }
+        return Promise.resolve(response);
+      } catch (e)
+      {
+        return Promise.reject(e);
+      }
+    },
+     // 注册不会获得token
+    async register(params: any) {
+      try {
+        const response = await register(params);
+        const { data, code } = response;
+        if (code === ResultEnum.SUCCESS) {
+          const ex = 7 * 24 * 60 * 60;
+          localCache.set(CURRENT_USER, data, ex);
+          localCache.set(IS_SCREENLOCKED, false);
           this.setUserInfo(data);
         }
         return Promise.resolve(response);
