@@ -8,7 +8,7 @@
         <div class="content-wrapper">
             <div class="text-wrapper">
                 <p>{{information}}</p>
-                <n-button type="info" size="large"  round> 开始 </n-button>
+                <n-button type="info" size="large"  round @click="handleStart"> 开始 </n-button>
             </div>
             <div class="movie-wrapper">
                 <div class="image-container">
@@ -21,8 +21,14 @@
 <script lang="ts" setup>
 import { ref, Ref } from "vue";
 import { NButton } from "naive-ui";
-
+import { useRouter } from "vue-router";
+import { PageEnum } from "@/enums/pageEnum";
 const information: Ref<string>  = ref<string> ("这是一个展示大语言模型应用的网站，在人工成本高企的当下，构建一些对人们有所帮助的人工智能助理，它能为人们做些真正的事情!");
+
+const router = useRouter();
+const handleStart = () => {
+    router.push({name: PageEnum.BASE_HOME__DESKTOP});
+}
 
 </script>
 <style lang="less" scoped> 

@@ -8,31 +8,46 @@
     <NConfigProvider
         v-if="!isLock"
         :locale="zhCN"
-        :theme-overrides="themeOverrides"
+        :theme-overrides="getThemeOverrides"
         :date-locale="dateZhCN"
     >
-    <RouterView />
-
+    <AppProvider>
+        <RouterView />
+    </AppProvider>
     </NConfigProvider>
   </div>
 </template>
 <script setup lang="ts" >
-import { ref } from "vue";
+import { ref, computed } from "vue";
 // import Layout from "@/layout/index.vue";
 import { NConfigProvider } from 'naive-ui'
-import { zhCN, dateZhCN, GlobalThemeOverrides } from 'naive-ui';
-
+import { zhCN, dateZhCN } from 'naive-ui';
+import { useDesignSettingStore } from '@/store/modules/designSetting';
+import { lighten } from '@/utils/index';
+import { AppProvider } from '@/components/Application';
 const isLock = ref(false);
 
-const themeOverrides: GlobalThemeOverrides = {
-    // 这里可以修改主题变量
-    /* common: {
-      primaryColor: '#FF0000'
-    },
-    Button: {
-      textColor: '#FF0000'
-    }*/
-  }
+const designStore = useDesignSettingStore();
+  /**
+   * @type import('naive-ui').GlobalThemeOverrides
+   */
+const getThemeOverrides = computed(() => {
+    const appTheme = designStore.appTheme;
+    const lightenStr = lighten(designStore.appTheme, 6);
+    return {
+        common: {
+            primaryColor: appTheme,
+            primaryColorHover: lightenStr,
+            primaryColorPressed: lightenStr,
+            primaryColorSuppl: appTheme,
+        },
+        LoadingBar: {
+            colorLoading: appTheme,
+        },
+    };
+});
+
+
 </script>
 
 <style scoped lang="less">
