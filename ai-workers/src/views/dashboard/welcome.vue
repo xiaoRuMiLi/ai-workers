@@ -27,7 +27,7 @@ const information: Ref<string>  = ref<string> ("这是一个展示大语言模�
 
 const router = useRouter();
 const handleStart = () => {
-    router.push({name: PageEnum.BASE_HOME__DESKTOP});
+    router.push({path: PageEnum.BASE_HOME__DESKTOP});
 }
 
 </script>

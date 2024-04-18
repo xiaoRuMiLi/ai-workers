@@ -2,14 +2,14 @@
  * @Description: 
  * @Author: lyq
  * @Date: 2024-04-02 17:12:46
- * @LastEditTime: 2024-04-17 19:51:37
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2024-04-18 15:59:30
+ * @LastEditors: lyq
  */
 import { App } from 'vue';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import type { IModuleType } from "./types";
 import { createRouterGuards } from './router-guards';
-import { RedirectRoute, RootRoute, LoginRoute, RegisterRoute } from '@/router/base';
+import { RedirectRoute, RootRoute, LoginRoute, RegisterRoute, PrivacyStatement, ServiceStatement } from '@/router/base';
 
 const modules = import.meta.glob<IModuleType>('./modules/**/*.ts', { eager: true });
 const routeModuleList: RouteRecordRaw[] = Object.keys(modules).reduce((list, key) => {
@@ -30,7 +30,7 @@ export const asyncRoutes = [...routeModuleList];
 
 
 //普通路由 也就是单页应用固定组件. 无需验证权限 RedirectRoute 加载的是layou/index.vue. 
-export const constantRouter: any[] = [LoginRoute, RootRoute, RedirectRoute, RegisterRoute];
+export const constantRouter: any[] = [LoginRoute, RootRoute, RedirectRoute, RegisterRoute, PrivacyStatement, ServiceStatement];
 
 const router = createRouter({
   history: createWebHistory(),

@@ -201,6 +201,9 @@ const transform: AxiosTransform = {
     // TODO 此处要根据后端接口返回格式修改
     const msg: string =
       response && response.data && response.data.message ? response.data.message : '';
+    // 表单验证错误,laravel后台抛出的
+    const errors = response && response.data && response.data.errors ? response.data.errors : [];
+    
     const err: string = error.toString();
     try {
       if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
@@ -226,7 +229,8 @@ const transform: AxiosTransform = {
     // 请求是否被取消
     const isCancel = axios.isCancel(error);
     if (!isCancel) {
-      checkStatus(error.response && error.response.status, msg);
+      // 弹出错误提示
+      checkStatus(error.response && error.response.status, msg, errors);
     } else {
       console.warn(error, '请求被取消！');
     }

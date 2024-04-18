@@ -61,7 +61,7 @@
         <footer v-if="!hidddenFoot" class="layout-footer"> 
             
         </footer>
-        <div class="chat-container">
+        <div class="layout-chat-container">
             <chat></chat>
         </div>
     </div>
@@ -196,6 +196,7 @@
         flex-direction: column;
         width: 100vw;
         display: flex;
+        height: 100%;
     }
     .head-white-space {
         height: 64px;
@@ -346,8 +347,7 @@
     .layout-middle {
         top: 64px;
         flex-grow: 1;
-        display: flex;
-        
+        display: flex; 
     }
     
     .layout-sidebar {
@@ -361,6 +361,11 @@
         /* 主内容区样式 */
         flex: 1; /* 可伸缩，占据剩余空间 */
         padding: 1rem;
+    }
+    .layout-chat-container {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
     }
 
 </style>

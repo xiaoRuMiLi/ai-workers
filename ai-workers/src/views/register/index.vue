@@ -25,7 +25,7 @@
                 </div>
             </n-form-item>
             <n-form-item>
-                <n-button type="primary" :loading="loading" :disabled="!formValid" @click="handleRegister">提交注册</n-button>
+                <n-button type="primary" :loading="loading"  @click="handleRegister">提交注册</n-button>
             </n-form-item>
             <n-alert v-if="error" type="error" show-icon>{{ error }}</n-alert>
         </n-form>
@@ -34,7 +34,7 @@
                 同意
             </n-checkbox>
             <span>
-                我已阅读并同意<a href="">服务条款</a>和<a href="">隐私声明</a>
+                我已阅读并同意<a disa href="" @click="toServiceStatement">服务条款</a>和<a href="" @click="toPrivacyStatement">隐私声明</a>
             </span>
         </n-space>
     </n-card>
@@ -98,6 +98,15 @@
         }, 1000);
     }
     
+    const toServiceStatement = (e: Event) => {
+        e.preventDefault();
+        router.push({name: "Service"});
+    }
+    
+    const toPrivacyStatement = (e: Event) => {
+        e.preventDefault();
+        router.push({name: "Privacy"});
+    }
 
     // 定义表单验证规则
     const rules = {
@@ -109,9 +118,9 @@
                 if (!value) {
                     return new Error('需要输入密码');
                 }
-                if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/.test(value)) 
+                if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{6,16}$/.test(value)) 
                 {  
-                    return new Error("密码至少8-16个，至少1个大写字母1个小写字母和1个数字");
+                    return new Error("至少6个字符，包含至少1个大写1个小写和1个数字");
                 }
                 return true;    
             },
@@ -182,7 +191,7 @@
 
     const validate = async () => {
         if (formRef.value) {
-            const {warnings}= await formRef.value.validate();
+            const {warnings} = await formRef.value.validate();
             if (!warnings)
             {
                 return true
@@ -193,8 +202,18 @@
     // 定义登录方法
     const handleRegister = async () => {
 
-       
-        
+        // 先验证表单
+        try {
+            formValid.value = await validate();
+        } catch (err) {
+           return message.info("没有正确输入内容，请先正确输入内容");
+        }
+        // 是否勾选许可协议
+        if (disabled.value == false)
+        {
+            return message.info("请先同意许可协议");
+        }
+        // 如果验证电话号码没有show，先显示
         if (!showVerifycode.value)
         {
             showVerifycode.value = true;
@@ -209,9 +228,9 @@
         message.loading('提交中...');
         loading.value = true;
         try {
-            const { code, message: msg } = await userStore.login(form);
+            const { code, message: msg } = await userStore.register(form);
             message.destroyAll();
-            console.log(code, message);
+            console.log("register:::::", code, message);
             if (code == ResultEnum.SUCCESS) {
                 const toPath = decodeURIComponent((route.query?.redirect || '/') as string);
                 message.success('注册成功，即将进入首页');

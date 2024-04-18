@@ -77,5 +77,24 @@ export const RegisterRoute: RouteRecordRaw = {
   component: () => import('@/views/register/index.vue'),
   meta: {
     title: '注册',
+    keepAlive: true,
+  },
+}
+
+export const PrivacyStatement: RouteRecordRaw = {
+  path: '/privacy',
+  name: 'Privacy',
+  component: () => import('@/views/statement/PrivacyStatement.vue'),
+  meta: {
+    title: '隐私声明',
+  },
+}
+
+export const ServiceStatement: RouteRecordRaw = {
+  path: '/service',
+  name: 'Service',
+  component: () => import('@/views/statement/ServiceStatement.vue'),
+  meta: {
+    title: '服务条款',
   },
 }

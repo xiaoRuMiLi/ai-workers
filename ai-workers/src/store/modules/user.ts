@@ -92,8 +92,10 @@ export const useUserStore = defineStore({
         const { data, code } = response;
         if (code === ResultEnum.SUCCESS) {
           const ex = 7 * 24 * 60 * 60;
+          localCache.set(ACCESS_TOKEN, data.token, ex);
           localCache.set(CURRENT_USER, data, ex);
           localCache.set(IS_SCREENLOCKED, false);
+          this.setToken(data.token);
           this.setUserInfo(data);
         }
         return Promise.resolve(response);

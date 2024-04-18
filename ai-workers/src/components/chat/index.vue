@@ -96,22 +96,22 @@ const showChatPannel = (value: boolean) => {
 
 <style scoped lang="less">
 @import '@/styles/index.less';
-.wrapper {
+.chat-wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
 }
 .chat-container {
     max-width: 1000px;
-    position: fixed;
+    position: absolute;
     bottom: 0;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    //top: 50%;
+    //left: 50%;
+    //transform: translate(-50%, -50%);
     text-align: center;
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 100vh;
+    //height: 100vh;
     display: flex;
     box-sizing: border-box;
     flex-direction: column;

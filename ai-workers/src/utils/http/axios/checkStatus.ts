@@ -1,4 +1,24 @@
-export function checkStatus(status: number, msg: string): void {
+// laravel 后台抛出的表单验证错误的类型
+export type Errors = {
+  [key:string]: string[]
+}
+
+/**
+ * 后台抛出样式
+ * {message: "The given data was invalid.", errors: {phone: ["电话号码已经被注册"]}}
+ * 
+*/
+export const errorsTostring = (errors: Errors) =>
+{
+  let arr: string[] = [];
+  for (const [key, value] of Object.entries(errors))
+  {
+    arr.push(`${key}: ` +  value.join(","));
+  }
+  return arr.join("\n");
+}
+export function checkStatus(status: number, msg: string, errors: Errors): void {
+  console.log(status, msg, errors);
   const $message = window['$message'];
   switch (status) {
     case 400:
@@ -23,6 +43,9 @@ export function checkStatus(status: number, msg: string): void {
     case 408:
       $message.error('网络请求超时');
       break;
+    case 422:
+      // laravel 抛出的表单验证异常
+      $message.error(msg + '\n' + errorsTostring(errors));
     case 500:
       $message.error('服务器错误,请联系管理员!');
       break;

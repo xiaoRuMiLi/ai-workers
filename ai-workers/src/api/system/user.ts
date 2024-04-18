@@ -2,8 +2,8 @@
  * @Description: 
  * @Author: lyq
  * @Date: 2024-04-07 12:44:13
- * @LastEditTime: 2024-04-09 21:21:35
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2024-04-18 11:28:28
+ * @LastEditors: lyq
  */
 import { http } from '@/utils/http/axios';
 
@@ -70,7 +70,7 @@ export function register(params)
 {
   return http.request<BasicResponseModel>(
     {
-      url: '/login_by_auth',
+      url: '/register',
       method: 'POST',
       params,
     },

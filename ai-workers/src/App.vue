@@ -4,12 +4,13 @@
  * @Date: 2024-04-01 22:19:32
 -->
 <template>
-  <div>
+  <div class="app-content">
     <NConfigProvider
         v-if="!isLock"
         :locale="zhCN"
         :theme-overrides="getThemeOverrides"
         :date-locale="dateZhCN"
+        :style="{height: '100%'}"
     >
     <AppProvider>
         <RouterView />
@@ -62,5 +63,8 @@ const getThemeOverrides = computed(() => {
     }
     .logo.vue:hover {
         filter: drop-shadow(0 0 2em #42b883aa);
+    }
+    .app-content {
+        height: 100%;
     }
 </style>
