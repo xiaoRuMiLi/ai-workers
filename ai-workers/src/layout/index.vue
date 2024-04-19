@@ -193,10 +193,8 @@
 @import "@/styles/var.less";
     /* 为布局组件添加一些基本的样式 */
     .layout-container {
-        flex-direction: column;
         width: 100vw;
-        display: flex;
-        height: 100%;
+        height: 90vh;
     }
     .head-white-space {
         height: 64px;
@@ -345,23 +343,14 @@
         bottom: 0;
     }
     .layout-middle {
-        top: 64px;
-        flex-grow: 1;
-        display: flex; 
+       
     }
     
     .layout-sidebar {
-        /* 侧边栏样式 */
-        flex: 0 0 200px; /* 不可伸缩，宽度固定为 200px */
+       
         background-color: #e0e0e0;
-        padding: 1rem;
     }
     
-    .layout-main {
-        /* 主内容区样式 */
-        flex: 1; /* 可伸缩，占据剩余空间 */
-        padding: 1rem;
-    }
     .layout-chat-container {
         position: fixed;
         bottom: 0;

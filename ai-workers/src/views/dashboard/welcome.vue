@@ -4,19 +4,19 @@
  * @Date: 2024-04-06 21:37:12
 -->
 <template>
-    <section>
-        <div class="content-wrapper">
-            <div class="text-wrapper">
-                <p>{{information}}</p>
-                <n-button type="info" size="large"  round @click="handleStart"> 开始 </n-button>
-            </div>
-            <div class="movie-wrapper">
-                <div class="image-container">
 
-                </div>
+    <div class="content-wrapper">
+        <div class="text-wrapper">
+            <p>{{information}}</p>
+            <n-button type="info" size="large"  round @click="handleStart"> 开始 </n-button>
+        </div>
+        <div class="movie-wrapper">
+            <div class="image-container">
+
             </div>
         </div>
-    </section>
+    </div>
+    
 </template>
 <script lang="ts" setup>
 import { ref, Ref } from "vue";

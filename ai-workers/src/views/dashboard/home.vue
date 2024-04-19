@@ -79,7 +79,7 @@
     justify-content: center;
     align-items: center;
     .content-container {
-        width: 80%; 
+        
     }
 
 }

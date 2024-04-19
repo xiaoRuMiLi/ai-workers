@@ -49,7 +49,7 @@
     </div>
 </template>
 <script lang="ts" setup>
-import ChatHistoryContent from "./components/ChatHistoryContent.vue";
+import ChatHistoryContent from "@/components/ChatHistoryContent.vue";
 import ChatPannel from "./components/ChatPannel.vue";
 import { ref, defineProps  } from "vue";
 import AiMessage from "/#/aiMessage";

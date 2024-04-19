@@ -39,7 +39,7 @@
 <script lang="ts" setup>
 import { defineProps, computed, onMounted, defineEmits, ref } from 'vue';
 import happyImage from "@static/images/e95d925dd71c38a1e4e3c249566f01b4.gif";
-import ChatInput from "./ChatInput.vue";
+import ChatInput from "@/components/ChatInput.vue";
 import { CloseCircleOutlined } from "@vicons/antd";
 import { NIcon } from "naive-ui";
   
