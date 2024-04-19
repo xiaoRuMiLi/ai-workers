@@ -194,10 +194,10 @@
     /* 为布局组件添加一些基本的样式 */
     .layout-container {
         width: 100vw;
-        height: 90vh;
+        height: 100vh;
     }
     .head-white-space {
-        height: 64px;
+        height: @header-height;
     }
     .layout-header {
         display: flex;
@@ -221,8 +221,8 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                height: 64px;
-                line-height: 64px;
+                height: @header-height;
+                line-height: @header-height;
                 overflow: hidden;
                 white-space: nowrap;
                 padding-left: 10px;
@@ -261,7 +261,7 @@
             .avatar {
                 display: flex;
                 align-items: center;
-                height: 64px;
+                height: 10vh;
             }
         
             > * {
@@ -271,8 +271,8 @@
     
             &-trigger {
                 display: inline-block;
-                width: 64px;
-                height: 64px;
+                width: @header-height;
+                height: @header-height;
                 text-align: center;
                 cursor: pointer;
                 transition: all 0.2s ease-in-out;
@@ -280,8 +280,8 @@
             .n-icon {
                 display: flex;
                 align-items: center;
-                height: 64px;
-                line-height: 64px;
+                height: @header-height;
+                line-height: @header-height;
             }
         
             &:hover {
@@ -338,12 +338,14 @@
         //}
     .layout-footer {
         /* 底部样式 */
-        padding: 1rem;
+        
         text-align: center;
         bottom: 0;
     }
     .layout-middle {
-       
+       .layout-main {
+            height: 92vh;
+       }
     }
     
     .layout-sidebar {

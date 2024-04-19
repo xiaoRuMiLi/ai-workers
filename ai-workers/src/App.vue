@@ -65,6 +65,6 @@ const getThemeOverrides = computed(() => {
         filter: drop-shadow(0 0 2em #42b883aa);
     }
     .app-content {
-        height: 100%;
+        height: 100vh;
     }
 </style>

@@ -2,8 +2,8 @@
  * @Description: 
  * @Author: lyq
  * @Date: 2024-04-18 16:59:01
- * @LastEditTime: 2024-04-19 09:47:46
- * @LastEditors: lyq
+ * @LastEditTime: 2024-04-19 21:33:12
+ * @LastEditors: Please set LastEditors
 -->
 <template>
     <div class="ai-worker-wrapper">
@@ -14,10 +14,12 @@
             </template>
             <template #content>
                 <div class="content">
-                    <chat-history
-                    :datas="historyMessages"
-                    v-model:show="showHistory"
-                    />
+                    <div class="ai-worker-history">
+                        <chat-history
+                        :datas="historyMessages"
+                        v-model:show="showHistory"
+                        />
+                    </div>
                     <chat-input 
                     :style="{position: 'absolute', bottom: '0'}"
                     v-model="question"
@@ -79,6 +81,11 @@ const handleSend = (question: string) =>
     .content {
         position: relative;
         height: 100%;
+
+        .ai-worker-history {
+            height: 80vh;
+            overflow-y: scroll;
+        }
         
     }
 }
