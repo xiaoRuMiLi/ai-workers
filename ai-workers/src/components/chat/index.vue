@@ -121,7 +121,6 @@ const showChatPannel = (value: boolean) => {
     background-color: white;
     padding: @padding-md;
     border-radius: @border-radius-md;
-    margin-bottom: 50px;
     box-sizing: border-box;
 }
 
