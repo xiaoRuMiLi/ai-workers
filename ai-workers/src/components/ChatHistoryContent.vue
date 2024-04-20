@@ -4,7 +4,7 @@
  * @Date: 2024-04-14 19:38:09
 -->
 <template>
-    <div class="chat-history" @click="showMsg = !showMsg">
+    <div class="chat-history" ref="chatHistory" @click="showMsg = !showMsg">
         <NIcon size="20" class="close-icon">
             <component :is="hideFont"/>
         </NIcon>
@@ -39,12 +39,14 @@
     </div>
 </template>
 <script setup lang="ts">
-    import { defineProps,  computed, defineEmits } from "vue";
+    import { defineProps,  computed, defineEmits, ref, watch } from "vue";
     import AiMessage from "/#/aiMessage";
     import { NIcon } from "naive-ui";
     import IconComponent from "@/icon-components/worker-icon";
     import { UpOutlined, DownOutlined } from "@vicons/antd";
-
+    
+    // 组件实例
+    const chatHistory = ref(null);
     type Props = {
         datas: AiMessage[],
         show: boolean,
@@ -74,6 +76,12 @@
             return props.show;
         }
     })
+
+    watch(props.datas, function (e) {
+        console.log("eee", e);
+    }, {deep:true});
+
+
 </script>
 <style scoped lang="less">
 @import "@/styles/var.less";

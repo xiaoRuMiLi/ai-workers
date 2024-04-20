@@ -2,8 +2,8 @@
  * @Description: 
  * @Author: lyq
  * @Date: 2024-04-18 16:59:01
- * @LastEditTime: 2024-04-19 21:33:12
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2024-04-20 18:02:21
+ * @LastEditors: lyq
 -->
 <template>
     <div class="ai-worker-wrapper">
@@ -14,7 +14,7 @@
             </template>
             <template #content>
                 <div class="content">
-                    <div class="ai-worker-history">
+                    <div ref="history" class="ai-worker-history">
                         <chat-history
                         :datas="historyMessages"
                         v-model:show="showHistory"
@@ -25,9 +25,6 @@
                     v-model="question"
                     @on-send="handleSend"
                     />
-
-                   
-
                 </div>
             </template>
             
@@ -41,9 +38,9 @@ import Layout from "./components/Layout.vue";
 import Menu from "./components/Menu.vue";
 import ChatHistory from "@/components/ChatHistoryContent.vue";
 import ChatInput from "@/components/ChatInput.vue";
-import { ref } from "vue";
+import { ref, Ref } from "vue";
 import AiMessage from "/#/aiMessage";
-const historyMessages: AiMessage[] = [
+const historyMessages: Ref<AiMessage[]> = ref([
     {role: 0, content: '你好', tokens: 10},
     {role: 1, content: '有什么可以为你效劳的', tokens: 10},
     {role: 0, content: '你好', tokens: 10},
@@ -65,12 +62,25 @@ const historyMessages: AiMessage[] = [
     {role: 1, content: '有什么可以为你效劳的', tokens: 10},
    
    
-];
+]);
 const showHistory = true;
 const question = ref("");
-const handleSend = (question: string) =>
+const history: Ref<HTMLDivElement | null> = ref(null);
+const handleSend = (value: string) =>
 {
-   console.log(question);
+   
+    historyMessages.value.push({role: 0, content: value, tokens: 10});
+    question.value = "";
+    if (history && history.value.hasOwnProperty("scrollTop") && history.value.hasOwnProperty("scrollHeight"))
+    {
+        console.log(history.value.scrollHeight);
+        const scrollHeight = history.value.scrollHeight;
+        history.value.scrollTop = scrollHeight;
+    }
+    
+    console.log(history);
+    //historyRef.value.setScrollTop();
+
 }
 </script>
 <style scoped lang="less">
