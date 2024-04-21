@@ -243,7 +243,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
   return new VAxios(
     deepMerge(
       {
-        timeout: 10 * 1000,
+        timeout: 100 * 1000,
         // token， 如果withToken == true requestInterceptors函数中会重新赋值，这个属性会拼接到token字符前面
         // 注意这里不要在Bearer后面加空格因为系统会用空格符拼接到token上，加了空格提示token错误
         authenticationScheme: 'Bearer',

@@ -2,8 +2,8 @@
  * @Description: 
  * @Author: lyq
  * @Date: 2024-04-18 16:59:01
- * @LastEditTime: 2024-04-20 18:02:21
- * @LastEditors: lyq
+ * @LastEditTime: 2024-04-21 23:32:34
+ * @LastEditors: Please set LastEditors
 -->
 <template>
     <div class="ai-worker-wrapper">
@@ -40,47 +40,54 @@ import ChatHistory from "@/components/ChatHistoryContent.vue";
 import ChatInput from "@/components/ChatInput.vue";
 import { ref, Ref } from "vue";
 import AiMessage from "/#/aiMessage";
+import { callServiceGroup } from "@/api/system/aiHelper";
+import { resolve } from "dns";
+import { reject } from "lodash-es";
+import { useMessage } from "naive-ui";
 const historyMessages: Ref<AiMessage[]> = ref([
-    {role: 0, content: '你好', tokens: 10},
-    {role: 1, content: '有什么可以为你效劳的', tokens: 10},
-    {role: 0, content: '你好', tokens: 10},
-    {role: 1, content: '有什么可以为你效劳的', tokens: 10},
-   
-    {role: 0, content: '你好', tokens: 10},
-    {role: 1, content: '有什么可以为你效劳的', tokens: 10},
-   
-    {role: 0, content: '你好', tokens: 10},
-    {role: 1, content: '有什么可以为你效劳的', tokens: 10},
-   
-    {role: 0, content: '你好', tokens: 10},
-    {role: 1, content: '有什么可以为你效劳的', tokens: 10},
-   
-    {role: 0, content: '你好', tokens: 10},
-    {role: 1, content: '有什么可以为你效劳的', tokens: 10},
-   
-    {role: 0, content: '你好', tokens: 10},
-    {role: 1, content: '有什么可以为你效劳的', tokens: 10},
-   
-   
 ]);
 const showHistory = true;
 const question = ref("");
+const message = useMessage();
 const history: Ref<HTMLDivElement | null> = ref(null);
-const handleSend = (value: string) =>
+const loading = ref(false);
+const toScrollTop = () => {
+    setTimeout(() => {
+    if (history.value)
+        {
+            const scrollHeight = history.value.scrollHeight;
+            history.value.scrollTop = scrollHeight;  
+            
+        }
+    
+    }, 1000);
+}
+const handleSend = async () =>
 {
    
-    historyMessages.value.push({role: 0, content: value, tokens: 10});
+    historyMessages.value.push({role: 0, content: question.value, tokens: 10});
+    toScrollTop();
+    const questionString = question.value;
     question.value = "";
-    if (history && history.value.hasOwnProperty("scrollTop") && history.value.hasOwnProperty("scrollHeight"))
+    message.loading('思考中...', { duration: 500000 });
+    loading.value = true;
+    try {
+        const {data} = await callServiceGroup({question: questionString}, "repair_service_group_call");
+        message.destroyAll();
+        if (Reflect.has(data, "answer"))
+        {
+            historyMessages.value.push({role: 1, content: data.answer, tokens: 10});
+            toScrollTop();
+        }
+        console.log(data);
+    } catch (err)
     {
-        console.log(history.value.scrollHeight);
-        const scrollHeight = history.value.scrollHeight;
-        history.value.scrollTop = scrollHeight;
+        console.log(err.message);
+    } finally {
+        loading.value = false;
     }
+     
     
-    console.log(history);
-    //historyRef.value.setScrollTop();
-
 }
 </script>
 <style scoped lang="less">
