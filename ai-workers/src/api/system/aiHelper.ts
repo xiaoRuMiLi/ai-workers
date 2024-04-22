@@ -7,6 +7,14 @@ import { http } from '@/utils/http/axios';
 
 export type Data = {
     answer: string,
+    interactive?: Interactive
+}
+
+export type Interactive = {
+    question: string,
+    type: string,
+    params: {[key: string]: any},
+    data?: any
 }
 export interface BasicResponseModel<T = any> {
     code: number;

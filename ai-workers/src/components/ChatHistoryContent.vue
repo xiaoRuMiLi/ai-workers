@@ -39,7 +39,7 @@
     </div>
 </template>
 <script setup lang="ts">
-    import { defineProps,  computed, defineEmits, ref, watch } from "vue";
+    import { defineProps,  computed, defineEmits, ref } from "vue";
     import AiMessage from "/#/aiMessage";
     import { NIcon } from "naive-ui";
     import IconComponent from "@/icon-components/worker-icon";
@@ -77,9 +77,6 @@
         }
     })
 
-    watch(props.datas, function (e) {
-        console.log("eee", e);
-    }, {deep:true});
 
 
 </script>

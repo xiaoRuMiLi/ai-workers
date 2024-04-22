@@ -2,8 +2,8 @@
  * @Description: 
  * @Author: lyq
  * @Date: 2024-04-18 16:59:01
- * @LastEditTime: 2024-04-21 23:32:34
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2024-04-22 17:42:46
+ * @LastEditors: lyq
 -->
 <template>
     <div class="ai-worker-wrapper">
@@ -44,6 +44,7 @@ import { callServiceGroup } from "@/api/system/aiHelper";
 import { resolve } from "dns";
 import { reject } from "lodash-es";
 import { useMessage } from "naive-ui";
+import { StringNullableChain } from "lodash";
 const historyMessages: Ref<AiMessage[]> = ref([
 ]);
 const showHistory = true;
@@ -72,18 +73,24 @@ const handleSend = async () =>
     message.loading('思考中...', { duration: 500000 });
     loading.value = true;
     try {
-        const {data} = await callServiceGroup({question: questionString}, "repair_service_group_call");
+        const { data } = await callServiceGroup({question: questionString}, "repair_service_group_call");
         message.destroyAll();
         if (Reflect.has(data, "answer"))
         {
             historyMessages.value.push({role: 1, content: data.answer, tokens: 10});
             toScrollTop();
         }
+        
+        if (Reflect.has(data, "interactive"))
+        {
+            console.log("interactive", data.interactive);
+        }
         console.log(data);
     } catch (err)
     {
         console.log(err.message);
     } finally {
+        message.destroyAll();
         loading.value = false;
     }
      
