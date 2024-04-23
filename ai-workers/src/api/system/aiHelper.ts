@@ -4,18 +4,14 @@
  * @Date: 2024-04-21 21:41:41
  */
 import { http } from '@/utils/http/axios';
+import type { Interactive, InteractiveType } from "/#/interactive";
 
 export type Data = {
     answer: string,
     interactive?: Interactive
 }
 
-export type Interactive = {
-    question: string,
-    type: string,
-    params: {[key: string]: any},
-    data?: any
-}
+
 export interface BasicResponseModel<T = any> {
     code: number;
     message: string;
