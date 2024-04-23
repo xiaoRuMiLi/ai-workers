@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lyq
  * @Date: 2024-04-18 16:59:01
- * @LastEditTime: 2024-04-22 17:42:46
+ * @LastEditTime: 2024-04-23 15:58:21
  * @LastEditors: lyq
 -->
 <template>
@@ -65,7 +65,10 @@ const toScrollTop = () => {
 }
 const handleSend = async () =>
 {
-   
+    if (loading.value)
+    {
+        return ;
+    }
     historyMessages.value.push({role: 0, content: question.value, tokens: 10});
     toScrollTop();
     const questionString = question.value;

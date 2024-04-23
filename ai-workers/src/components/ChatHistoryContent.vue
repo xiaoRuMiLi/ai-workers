@@ -20,7 +20,7 @@
                         </div>
                         <div class="message-content">
                             <div class="message-content-text">
-                                {{ item.content}}
+                                {{ item.content}}    
                             </div>
                             
                         </div>
@@ -129,6 +129,10 @@
                 padding: 0 @padding-base;
                 background-color: rgba(0, 153, 200, 0.3);
                 border-radius: @border-radius-base;
+                white-space: pre-wrap; /* 保留空格和换行符，并自动换行 */
+                font-family: Courier, monospace; /* 设置等宽字体 */
+
+                
             }
          
         }

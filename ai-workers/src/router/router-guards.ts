@@ -18,7 +18,7 @@ export function createRouterGuards(router: Router) {
   
   router.beforeEach(async (to, from, next) => {
 
-    console.log("beforeEach__to", to, "beforeEach__from", from);
+    // console.log("beforeEach__to", to, "beforeEach__from", from);
     const Loading = window['$loading'] || null;
     Loading && Loading.start();
     if (from.path === LOGIN_PATH && to.name === 'errorPage') {
@@ -70,11 +70,11 @@ export function createRouterGuards(router: Router) {
     }
     // 每次userStore.getInfo都会调用API访问后端
     const userInfo = await userStore.getInfo();
-    console.log("userInfouserInfo", userInfo);
+    //console.log("userInfouserInfo", userInfo);
     // 根据userInfo 生成路由
     // routes 用户具有权限的路由数组，路由中meta.permissios 和用户 permissions 有相同的数组元素的路由
     const routes = await asyncRouteStore.generateRoutes(userInfo);
-    console.log("routes__", routes);
+    //console.log("routes__", routes);
     // routers 是route/modules/**包里面的路由文件
     // 和上面一样的值console.log("asyncRouteStore:",asyncRouteStore.getRouters());
 

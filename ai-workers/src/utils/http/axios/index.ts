@@ -184,7 +184,7 @@ const transform: AxiosTransform = {
       (config as Recordable).headers.Authorization = options.authenticationScheme
         ? `${options.authenticationScheme} ${token}`
         : token;
-      console.log("requestInterceptors", config);
+      // console.log("requestInterceptors", config);
     }
     
     return config;

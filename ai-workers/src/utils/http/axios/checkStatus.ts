@@ -18,7 +18,7 @@ export const errorsTostring = (errors: Errors) =>
   return arr.join("\n");
 }
 export function checkStatus(status: number, msg: string, errors: Errors): void {
-  console.log(status, msg, errors);
+  // console.log(status, msg, errors);
   const $message = window['$message'];
   switch (status) {
     case 400:
