@@ -2,8 +2,13 @@
  * @Description: 
  * @Author: lyq
  * @Date: 2024-04-18 16:59:01
- * @LastEditTime: 2024-04-23 15:58:21
+<<<<<<< HEAD
+ * @LastEditTime: 2024-04-24 11:21:44
  * @LastEditors: lyq
+=======
+ * @LastEditTime: 2024-04-23 23:04:28
+ * @LastEditors: Please set LastEditors
+>>>>>>> c6c45429852bb01c55b7d8a43b3406218c5c069e
 -->
 <template>
     <div class="ai-worker-wrapper">
@@ -38,15 +43,39 @@ import Layout from "./components/Layout.vue";
 import Menu from "./components/Menu.vue";
 import ChatHistory from "@/components/ChatHistoryContent.vue";
 import ChatInput from "@/components/ChatInput.vue";
-import { ref, Ref } from "vue";
+import { ref, Ref, computed } from "vue";
 import AiMessage from "/#/aiMessage";
 import { callServiceGroup } from "@/api/system/aiHelper";
-import { resolve } from "dns";
-import { reject } from "lodash-es";
-import { useMessage } from "naive-ui";
-import { StringNullableChain } from "lodash";
+import { useMessage, useDialog  } from "naive-ui";
+import type { Interactive, InteractiveType } from "/#/interactive";
+
+
+const dialog = useDialog();
+
+const doInteractive = function (interactiveType: InteractiveType, data: Interactive)
+{
+    if (interactiveType === "confirm") {
+        dialog.warning({
+            title: "提示",
+            content: data.question,
+            positiveText: '确定',
+            negativeText: '取消',
+            onPositiveClick: () => {
+                question.value = "1";
+                handleSend();
+            },
+            onNegativeClick: () => {
+                question.value = "0";
+                handleSend();
+            }
+        })
+        return ;
+    }
+}
+
 const historyMessages: Ref<AiMessage[]> = ref([
 ]);
+
 const showHistory = true;
 const question = ref("");
 const message = useMessage();
@@ -84,9 +113,11 @@ const handleSend = async () =>
             toScrollTop();
         }
         
-        if (Reflect.has(data, "interactive"))
+        if ( Reflect.has(data, "interactive") && data.interactive && data.interactive.type)
         {
-            console.log("interactive", data.interactive);
+            // 执行interactive
+            const typeName: InteractiveType = data.interactive.type;
+            doInteractive(typeName, data.interactive);
         }
         console.log(data);
     } catch (err)

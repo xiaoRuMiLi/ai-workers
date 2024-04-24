@@ -19,7 +19,7 @@
                             
                         </div>
                         <div class="message-content">
-                            <div class="message-content-text">
+                            <div class="message-content-text" :style="{whiteSpace: 'pre-wrap'}">
                                 {{ item.content}}    
                             </div>
                             
