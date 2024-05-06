@@ -2,13 +2,8 @@
  * @Description: 
  * @Author: lyq
  * @Date: 2024-04-18 16:59:01
-<<<<<<< HEAD
- * @LastEditTime: 2024-04-24 11:21:44
- * @LastEditors: lyq
-=======
- * @LastEditTime: 2024-04-23 23:04:28
+ * @LastEditTime: 2024-05-06 21:56:41
  * @LastEditors: Please set LastEditors
->>>>>>> c6c45429852bb01c55b7d8a43b3406218c5c069e
 -->
 <template>
     <div class="ai-worker-wrapper">
@@ -48,10 +43,11 @@ import AiMessage from "/#/aiMessage";
 import { callServiceGroup } from "@/api/system/aiHelper";
 import { useMessage, useDialog  } from "naive-ui";
 import type { Interactive, InteractiveType } from "/#/interactive";
+import { useRoute } from "vue-router";
 
 
 const dialog = useDialog();
-
+const route = useRoute();
 const doInteractive = function (interactiveType: InteractiveType, data: Interactive)
 {
     if (interactiveType === "confirm") {
@@ -94,6 +90,14 @@ const toScrollTop = () => {
 }
 const handleSend = async () =>
 {
+    const {service: serviceGroupName, groupid: userGroupId } = route.query;
+    
+    if (!serviceGroupName || !userGroupId || parseInt(userGroupId as string) <= 0)
+    {
+        message.warning(`访问的服务名${serviceGroupName}或用户组不存在`);
+        return ;
+    }
+
     if (loading.value)
     {
         return ;
@@ -105,7 +109,7 @@ const handleSend = async () =>
     message.loading('思考中...', { duration: 500000 });
     loading.value = true;
     try {
-        const { data } = await callServiceGroup({question: questionString}, "repair_service_group_call");
+        const { data } = await callServiceGroup({question: questionString}, serviceGroupName as string, userGroupId);
         message.destroyAll();
         if (Reflect.has(data, "answer"))
         {

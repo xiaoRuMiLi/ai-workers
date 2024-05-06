@@ -2,8 +2,8 @@
  * @Description: 
  * @Author: lyq
  * @Date: 2024-04-18 17:15:54
- * @LastEditTime: 2024-04-18 17:26:49
- * @LastEditors: lyq
+ * @LastEditTime: 2024-05-06 21:24:59
+ * @LastEditors: Please set LastEditors
  */
 import { Layout } from "@/router/constant";
 import { RouteRecordRaw } from "vue-router";
@@ -23,9 +23,9 @@ const routeName = "AiWorker";
  * */
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/ai-worker',
+    path: '/aiworker',
     name: routeName,
-    redirect: '/ai-worker/action/:id',
+    redirect: '/aiworker/action',
     component: Layout,
     meta: {
         title: 'AiWorker',
@@ -39,7 +39,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [
       {
-        path: 'action/:id',
+        path: 'action',
         name: `${routeName}Action`,
         meta: {
             title: '服务体验',

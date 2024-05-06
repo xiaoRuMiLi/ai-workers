@@ -25,11 +25,11 @@ export interface BasicPageParams {
 }
 
 /**
- * @description: 汽车维修测试消息
+ * @description: 模型聊天
  */
-export function callServiceGroup(params: {question: string}, serviceGroupName: string) {
+export function callServiceGroup(params: {question: string}, serviceGroupName: string, groupId: string|number) {
     return http.request<BasicResponseModel<Data>>({
-        url: `/api/${serviceGroupName}`,
+        url: `/api/${serviceGroupName}/${groupId}`,
         method: 'get',
         params,
         timeout: 500 * 1000, // 默认超时时间为500秒
