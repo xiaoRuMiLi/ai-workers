@@ -15,6 +15,7 @@
                     :description="item.description"
                     :key-point="item.keyPoint"
                     :icon="item.icon"
+                    @on-click="handleClickItem"
                     />
                 </div>
             </slot>
@@ -22,13 +23,28 @@
     </div>"
 </template>
 <script lang="ts" setup>
-    import { defineProps } from "vue";
+    import { defineProps, defineEmits } from "vue";
     import { BaseWorker } from "/#/worker";
     import WorkerItem from "./Witem.vue";
     const props = defineProps<{
         title: string,
         datas: BaseWorker[]
     }>();
+
+    const emits = defineEmits<{
+        (e: "clickItem", value: WorkerItem): void
+    }>();
+
+    const handleClickItem = (id: number) => {
+        
+        const target: BaseWorker  = props.datas.filter(item => item.id == id);
+        if (target.length > 0)
+        {
+            emits("clickItem", target[0]);
+        }
+        
+
+    }
    
 </script>
 <style scoped lang="less">

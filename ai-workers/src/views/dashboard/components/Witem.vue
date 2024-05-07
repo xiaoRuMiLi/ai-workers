@@ -42,16 +42,19 @@
        
 </template>
 <script lang="ts" setup>
-    import { defineProps  } from 'vue';
+    import { defineProps, defineEmits  } from 'vue';
     import type { BaseWorker } from "/#/worker";
-    import { NCard, NPopover } from "naive-ui";
     import { NIcon } from "naive-ui";
     import iconComponents from "@/icon-components/worker-icon";
     
     defineProps<BaseWorker>();
+    
+    const emits = defineEmits<{
+        (e: "onClick", value: number): void
+    }>();
 
     const handleClick = (id: number) => {
-        console.log(id);
+        emits("onClick", id);
     }
 
 </script>

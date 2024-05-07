@@ -4,4 +4,6 @@ export interface BaseWorker {
     icon: string | 'defaultIcon',
     id: number,
     keyPoint: string | null,
+    groupId: number,
+    serviceName: string,
 }

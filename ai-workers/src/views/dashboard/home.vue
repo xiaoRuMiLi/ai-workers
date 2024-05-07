@@ -3,73 +3,58 @@
  * @User: King <303219462@qq.com>
  * @Date: 2024-04-11 21:29:10
 -->
+<!--
+ * @Description: 
+ * @User: King <303219462@qq.com>
+ * @Date: 2024-04-11 21:29:10
+-->
 <template>
     <div class="home-wrapper">
         <div class="content-container">
             <worker-list
             :datas="exampleList"
             title="推荐"
+            @click-item="handleClickItem"
             />
         </div>
         
     </div>
 </template>
 <script lang="ts" setup>
-    import { ref, Ref } from "vue";
+    import { ref, Ref, onMounted } from "vue";
     import { BaseWorker } from "/#/worker";
+    import { recommendService } from "@/api/system/aiHelper";
     import  WorkerList  from "./components/WList.vue";
+    import { useRouter } from "vue-router";
+
+    const router = useRouter();
 
     const exampleList: Ref<BaseWorker[]> = ref([
-        {
-        id: 1,
-        name: "保险销售人员", 
-        description: `这是模拟保险销售员，并给了一个拟人化的名字陈东梅，
-        这是我们给他设定的任务流：
-        1. 获取到你将要购买车险的车牌号码，并确认无误。
-        2. 通过谈话获取到你的将要购买保险的险种，顺便告诉你近期的优惠活动，礼品赠送等，这一步我们设定了尽量给你推销驾乘险（公司有任务驾乘险必须推）。
-        3. 收集到所有的信息后然后自动给你发送整理好的资料到你的邮箱。
-        `,
-        icon: "default",
-        keyPoint: "和客户聊保险需求，推荐购买险种"
-        },
-        {
-        id: 1,
-        name: "保险销售人员", 
-        description: `这是模拟保险销售员，并给了一个拟人化的名字陈东梅，
-        这是我们给他设定的任务流：
-        1. 获取到你将要购买车险的车牌号码，并确认无误。
-        2. 通过谈话获取到你的将要购买保险的险种，顺便告诉你近期的优惠活动，礼品赠送等，这一步我们设定了尽量给你推销驾乘险（公司有任务驾乘险必须推）。
-        3. 收集到所有的信息后然后自动给你发送整理好的资料到你的邮箱。
-        `,
-        icon: "default",
-        keyPoint: "和客户聊保险需求，推荐购买险种"
-        },
-        {
-        id: 1,
-        name: "保险销售人员", 
-        description: `这是模拟保险销售员，并给了一个拟人化的名字陈东梅，
-        这是我们给他设定的任务流：
-        1. 获取到你将要购买车险的车牌号码，并确认无误。
-        2. 通过谈话获取到你的将要购买保险的险种，顺便告诉你近期的优惠活动，礼品赠送等，这一步我们设定了尽量给你推销驾乘险（公司有任务驾乘险必须推）。
-        3. 收集到所有的信息后然后自动给你发送整理好的资料到你的邮箱。
-        `,
-        icon: "default",
-        keyPoint: "和客户聊保险需求，推荐购买险种"
-        },
-        {
-        id: 1,
-        name: "保险销售人员", 
-        description: `这是模拟保险销售员，并给了一个拟人化的名字陈东梅，
-        这是我们给他设定的任务流：
-        1. 获取到你将要购买车险的车牌号码，并确认无误。
-        2. 通过谈话获取到你的将要购买保险的险种，顺便告诉你近期的优惠活动，礼品赠送等，这一步我们设定了尽量给你推销驾乘险（公司有任务驾乘险必须推）。
-        3. 收集到所有的信息后然后自动给你发送整理好的资料到你的邮箱。
-        `,
-        icon: "default",
-        keyPoint: "和客户聊保险需求，推荐购买险种"
-        }
-    ])
 
+    ])
+    const getRecommendService = async ()=> {
+        const {data, code } = await recommendService();
+        if (code  == 200)
+        {
+            const recommendList = data.map( service => {
+                const {id, description, group_id: groupId, icon, name, service_name: serviceName, key_point: keyPoint} = service;
+                return {id, description, groupId, name, icon, serviceName, keyPoint};
+            });
+            exampleList.value = recommendList;
+        }
+
+
+        console.log(data);
+    }
+
+    const handleClickItem = (item: BaseWorker) => {
+        console.log(item);
+        router.push({name: "AiWorkerAction", query: {service: item.serviceName, groupid: item.groupId}});
+    }
+
+    onMounted(() => {
+        getRecommendService();
+    })
 </script>
 <style lang="less" scoped>
 @import '@/styles/var.less';

@@ -261,7 +261,7 @@
             .avatar {
                 display: flex;
                 align-items: center;
-                height: 10vh;
+                height: 100%;
             }
         
             > * {
