@@ -36,7 +36,7 @@
                                 <SettingOutlined />
                             </n-icon>
                         </template>
-                        <span>项目配置</span>
+                        <span @click="toSetting">项目配置</span>
                     </n-tooltip>
                 </div>
               </div>
@@ -69,12 +69,14 @@
   
 <script lang="ts">
   import { defineComponent, reactive, toRefs,  } from 'vue';
-  import { NTooltip, NIcon, NDropdown, NAvatar } from 'naive-ui';
+  import { NTooltip, NIcon, NDropdown, NAvatar, DropdownOption, useMessage } from 'naive-ui';
   import { useUserStoreInstance } from '@/store/modules/user';
   import { FullscreenOutlined, FullscreenExitOutlined, UserOutlined, SettingOutlined } from '@vicons/antd';
   import Chat from "@/components/chat/index.vue";
+
+  import { useRouter } from "vue-router";
   
-    
+  
     /**
      * Layout 组件定义了一个基本的页面布局结构
      * 包括头部、侧边栏、主内容区和底部
@@ -119,6 +121,8 @@
         },
         setup(props) {
             const userStore = useUserStoreInstance();
+            const router = useRouter();
+            const message = useMessage();
             const { name } = userStore?.info || {};
             const state = reactive({
                 username: name || '',
@@ -140,6 +144,15 @@
                     key: 2,
                 },
             ];
+
+            const loginOut = () => {
+                userStore.logout();
+                router.push({name: "Login"});
+            }
+
+            const toSetting = () => {
+                message.info("功能正在开发中");
+            }
         
             /**
              * 一个示例方法
@@ -167,8 +180,16 @@
                 }
             };
 
-            const avatarSelect = () => {
+            const avatarSelect = (key: string | number, option: DropdownOption) => {
                 // 图标选择方法
+                if (key == 1)
+                {
+                    router.push({name: "Mine"});
+                }
+                if (key == 2)
+                {
+                    loginOut();
+                }
             }
 
             const openSetting = () => {
@@ -182,6 +203,7 @@
                 avatarOptions,
                 avatarSelect,
                 openSetting,
+                toSetting,
                 ...toRefs(state)
                 
             };

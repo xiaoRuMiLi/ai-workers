@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lyq
  * @Date: 2024-04-18 17:32:37
- * @LastEditTime: 2024-04-18 21:31:50
+ * @LastEditTime: 2024-05-09 20:36:27
  * @LastEditors: Please set LastEditors
 -->
 <template>
@@ -14,7 +14,7 @@
             src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
             />
         </div>
-        <div class="chat-list">
+        <div v-show="false" class="chat-list">
             <n-collapse arrow-placement="right">
                 <n-collapse-item title="青铜" name="1">
                     <template #header>
@@ -31,7 +31,23 @@
                         </div>
                     </template>
                 </n-collapse-item>
-        </n-collapse>
+                
+            </n-collapse>
+        </div>
+        <div class="info">
+            <n-card>
+                <n-h3>
+                    {{workerInfo.name}}
+
+                </n-h3>
+                <n-p>
+                    {{ workerInfo.keyPoint }}
+                </n-p>
+                <n-p>
+                    {{ workerInfo.description }}
+
+                </n-p>
+            </n-card>
 
         </div>
         <div class="btns">
@@ -43,7 +59,26 @@
     </div>
 </template>
 <script setup lang="ts">
-import { NAvatar, NCollapse, NCollapseItem } from "naive-ui";
+import { NAvatar, NCollapse, NCollapseItem, NH3, NP} from "naive-ui";
+
+import { defineProps, defineEmits, ref  } from "vue";
+import { BaseWorker } from "/#/worker";
+/*
+    name: string,
+    description: string,
+    icon: string | 'defaultIcon',
+    id: number,
+    keyPoint: string | null,
+    groupId: number,
+    serviceName: string,
+*/
+const props = defineProps<{
+    chatList?: BaseWorker[],
+    workerInfo: BaseWorker
+
+
+}>();
+
 </script>
 <style scoped lang="less">
 @import "@/styles/index.less";

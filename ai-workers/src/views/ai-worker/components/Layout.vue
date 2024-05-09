@@ -2,12 +2,12 @@
  * @Description: 
  * @Author: lyq
  * @Date: 2024-04-18 17:00:51
- * @LastEditTime: 2024-04-18 18:33:33
- * @LastEditors: lyq
+ * @LastEditTime: 2024-05-09 20:44:01
+ * @LastEditors: Please set LastEditors
 -->
 <template>
     <div class="ai-worker-layout">
-        <div class="left">
+        <div v-show="false" class="left">
             <slot name="menu">
                 this is menu
             </slot>
@@ -33,7 +33,7 @@
     font-size: @font-size-md;
     box-sizing: border-box;
     position: relative;
-    justify-content: space-between;
+    justify-content: center;
 
 
     .left {
@@ -48,7 +48,7 @@
         font-size: @font-size-md;
         background-color: @background-color-light;
         height: 100%;
-        width: 80%;
+        min-width: 80%;
         margin-left: @padding-sm;
     }
 }

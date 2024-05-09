@@ -2,16 +2,20 @@
  * @Description: 
  * @Author: lyq
  * @Date: 2024-04-18 16:59:01
- * @LastEditTime: 2024-05-06 21:56:41
+ * @LastEditTime: 2024-05-09 20:39:42
  * @LastEditors: Please set LastEditors
 -->
 <template>
     <div class="ai-worker-wrapper">
         <Layout>
-            <template #menu>
-                <Menu/>
+            <!--
+                <template #menu>
+                    <Menu
+                    worker-info="workerInfo"
+                    />
 
-            </template>
+                </template>
+            -->
             <template #content>
                 <div class="content">
                     <div ref="history" class="ai-worker-history">
