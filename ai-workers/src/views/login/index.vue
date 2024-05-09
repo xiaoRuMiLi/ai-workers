@@ -4,23 +4,27 @@
  * @Date: 2024-04-06 20:42:37
 -->
 <template>
+    <div class="login-wrapper">
     
-    <n-card size="large" class="login-card">
-      <n-form ref="loginForm" size="large" :model="form" :rules="rules" label-width="120px">
-        <n-form-item size="large" label="电话号码" path="phone">
-            <n-input v-model:value="form.phone" size="large" :style="inputStyle" placeholder="请输入电话号码" />
-        </n-form-item>
-        <n-form-item size="large" label="密码" path="password">
-            <n-input v-model:value="form.password" size="large" :style="inputStyle" type="password" placeholder="请输入密码" />
-        </n-form-item>
-        <n-form-item>
-            <n-button type="primary" @click="handleLogin" :loading="loading">登录</n-button>
-        </n-form-item>
-        <n-alert v-if="error" type="error" show-icon>{{ error }}</n-alert>
-      </n-form>
-    </n-card>
+        <n-card size="large" class="login-card">
+        <n-form ref="loginForm" size="large" :model="form" :rules="rules" label-width="120px">
+            <n-form-item size="large" label="电话号码" path="phone">
+                <n-input v-model:value="form.phone" size="large" :style="inputStyle" placeholder="请输入电话号码" />
+            </n-form-item>
+            <n-form-item size="large" label="密码" path="password">
+                <n-input v-model:value="form.password" size="large" :style="inputStyle" type="password" placeholder="请输入密码" />
+            </n-form-item>
+            <n-form-item>
+                <div class="btns">
+                    <n-button type="primary" @click="handleLogin" :loading="loading">登录</n-button>
+                    <n-button type="primary" @click="handleRegister" :loading="loading">注册账号</n-button>
+                </div>
+            </n-form-item>
+            <n-alert v-if="error" type="error" show-icon>{{ error }}</n-alert>
+        </n-form>
+        </n-card>
     
-    
+    </div>
   </template>
   
 <script setup lang="ts">
@@ -109,6 +113,10 @@
 
     };
 
+    const handleRegister = () => {
+        router.push({name: "Register"});
+    }
+
     // 定义表单重置方法
     const resetForm = () => {
         form.phone = '';
@@ -118,8 +126,19 @@
 </script>
   
 <style scoped>
+.login-wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
 .login-card {
     max-width: 1000px;
     margin: 50px auto;
+}
+.btns {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 </style>

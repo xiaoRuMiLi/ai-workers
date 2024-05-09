@@ -77,7 +77,9 @@ export const RegisterRoute: RouteRecordRaw = {
   component: () => import('@/views/register/index.vue'),
   meta: {
     title: '注册',
-    keepAlive: true,
+    keepAlive: false,
+    // 不需要验证token
+    ignoreAuth: true
   },
 }
 
@@ -87,6 +89,7 @@ export const PrivacyStatement: RouteRecordRaw = {
   component: () => import('@/views/statement/PrivacyStatement.vue'),
   meta: {
     title: '隐私声明',
+    ignoreAuth: true
   },
 }
 
@@ -96,5 +99,6 @@ export const ServiceStatement: RouteRecordRaw = {
   component: () => import('@/views/statement/ServiceStatement.vue'),
   meta: {
     title: '服务条款',
+    ignoreAuth: true
   },
 }

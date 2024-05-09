@@ -4,41 +4,42 @@
  * @Date: 2024-04-06 20:42:37
 -->
 <template>
+    <div class="register-wrapper">
     
-    <n-card size="large" class="login-card">
-        <n-form ref="formRef" size="large" :model="form" :rules="rules" label-width="120px">
-            <n-form-item size="large" label="电话号码" path="phone">
-                <n-input v-model:value="form.phone" size="large" :style="inputStyle" placeholder="请输入电话号码" />
-            </n-form-item>
-            <n-form-item size="large" label="密码" path="password">
-                <n-input v-model:value="form.password" size="large" :style="inputStyle" type="password" placeholder="请输入密码" />
-            </n-form-item>
-            <n-form-item size="large" label="重复密码" path="password_confirmation">
-                <n-input v-model:value="form.password_confirmation" size="large" :style="inputStyle" type="password" placeholder="请输入密码" />
-            </n-form-item>
-            <n-form-item v-if="showVerifycode">
-                <div class="verifyCode" :style="inputStyle">
-                    <n-input v-model:value="form.verification_code" size="large"  placeholder="请输入验证码" />
-                    <div class="btn">
-                        <n-button :disabled="second > 0" type="tertiary" @click="handleVerifyCode" >{{secondOrAgain}}</n-button>
+        <n-card size="large" class="login-card">
+            <n-form ref="formRef" size="large" :model="form" :rules="rules" label-width="120px">
+                <n-form-item size="large" label="电话号码" path="phone">
+                    <n-input v-model:value="form.phone" size="large" :style="inputStyle" placeholder="请输入电话号码" />
+                </n-form-item>
+                <n-form-item size="large" label="密码" path="password">
+                    <n-input v-model:value="form.password" size="large" :style="inputStyle" type="password" placeholder="请输入密码" />
+                </n-form-item>
+                <n-form-item size="large" label="重复密码" path="password_confirmation">
+                    <n-input v-model:value="form.password_confirmation" size="large" :style="inputStyle" type="password" placeholder="请输入密码" />
+                </n-form-item>
+                <n-form-item v-if="showVerifycode">
+                    <div class="verifyCode" :style="inputStyle">
+                        <n-input v-model:value="form.verification_code" size="large"  placeholder="请输入验证码" />
+                        <div class="btn">
+                            <n-button :disabled="second > 0" type="tertiary" @click="handleVerifyCode" >{{secondOrAgain}}</n-button>
+                        </div>
                     </div>
-                </div>
-            </n-form-item>
-            <n-form-item>
-                <n-button type="primary" :loading="loading"  @click="handleRegister">提交注册</n-button>
-            </n-form-item>
-            <n-alert v-if="error" type="error" show-icon>{{ error }}</n-alert>
-        </n-form>
-        <n-space>
-            <n-checkbox v-model:checked="disabled" style="margin-right: 12px">
-                同意
-            </n-checkbox>
-            <span>
-                我已阅读并同意<a disa href="" @click="toServiceStatement">服务条款</a>和<a href="" @click="toPrivacyStatement">隐私声明</a>
-            </span>
-        </n-space>
-    </n-card>
-
+                </n-form-item>
+                <n-form-item>
+                    <n-button type="primary" :loading="loading"  @click="handleRegister">提交注册</n-button>
+                </n-form-item>
+                <n-alert v-if="error" type="error" show-icon>{{ error }}</n-alert>
+            </n-form>
+            <n-space>
+                <n-checkbox v-model:checked="disabled" style="margin-right: 12px">
+                    同意
+                </n-checkbox>
+                <span>
+                    我已阅读并同意<a disa href="" @click="toServiceStatement">服务条款</a>和<a href="" @click="toPrivacyStatement">隐私声明</a>
+                </span>
+            </n-space>
+        </n-card>
+    </div>
     
     
   </template>
@@ -258,6 +259,12 @@
 </script>
   
 <style scoped>
+.register-wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
 .login-card {
     max-width: 1000px;
     margin: 50px auto;

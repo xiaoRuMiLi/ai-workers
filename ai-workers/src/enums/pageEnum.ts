@@ -19,5 +19,7 @@ export enum PageEnum {
   // 首页
   BASE_HOME__DESKTOP = "/dashboard/home",
   // 注册
-  BASE_REGISTER_NAME = "register"
+  BASE_REGISTER_NAME = "Register",
+  // 注册
+  BASE_REGISTER = "/register"
 }
