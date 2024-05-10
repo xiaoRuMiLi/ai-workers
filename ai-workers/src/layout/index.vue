@@ -62,7 +62,9 @@
             
         </footer>
         <div class="layout-chat-container">
+            <!-- 店小二 功能等待细化
             <chat></chat>
+            -->
         </div>
     </div>
 </template>
@@ -72,7 +74,7 @@
   import { NTooltip, NIcon, NDropdown, NAvatar, DropdownOption, useMessage } from 'naive-ui';
   import { useUserStoreInstance } from '@/store/modules/user';
   import { FullscreenOutlined, FullscreenExitOutlined, UserOutlined, SettingOutlined } from '@vicons/antd';
-  import Chat from "@/components/chat/index.vue";
+  //import Chat from "@/components/chat/index.vue";
 
   import { useRouter } from "vue-router";
   
@@ -90,7 +92,7 @@
             NAvatar,
             UserOutlined,
             SettingOutlined,
-            Chat,
+           // Chat,
         },
         props: {
             hiddenHead: {
@@ -136,7 +138,7 @@
 
             const avatarOptions = [
                 {
-                    label: '个人设置',
+                    label: '个人信息',
                     key: 1,
                 },
                 {

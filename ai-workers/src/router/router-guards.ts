@@ -18,18 +18,18 @@ export function createRouterGuards(router: Router) {
   
   router.beforeEach(async (to, from, next) => {
 
-     console.log("beforeEach__to", to, "beforeEach__from", from);
+    //console.log("beforeEach__to", to, "beforeEach__from", from);
     const Loading = window['$loading'] || null;
     Loading && Loading.start();
     if (from.path === LOGIN_PATH && to.name === 'errorPage') {
-      console.log("base home 去到首页");
+      //console.log("base home 去到首页");
       next(PageEnum.BASE_HOME);
       return;
     }
 
     // Whitelist can be directly entered
     if (whitePathList.includes(to.path as PageEnum)) {
-      console.log("属于白名单不需要重定向");
+      //console.log("属于白名单不需要重定向");
       next();
       return;
     }
@@ -41,7 +41,7 @@ export function createRouterGuards(router: Router) {
       // You can access without permissions. You need to set the routing meta.ignoreAuth to true
       // ignoreAuth 忽略身份验证。 如果to路由为忽略身份验证的。
       if (to.meta.ignoreAuth) {
-        console.log("没有token,但是 to.meta.ignoreAuth 为true 该路由不需要登录");
+        //console.log("没有token,但是 to.meta.ignoreAuth 为true 该路由不需要登录");
         next();
         return;
       }
